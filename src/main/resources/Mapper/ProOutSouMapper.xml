@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.engTecOutSouPlat.dao.ProOutSouMapper">
+	<insert id="add" parameterType="com.engTecOutSouPlat.entity.ProOutSou">
+		insert into pro_out_sou
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="contactName!=null">
+				contactName,
+			</if>
+			<if test="phone!=null">
+				phone,
+			</if>
+			<if test="area!=null">
+				area,
+			</if>
+			<if test="companyId!=null">
+				companyId,
+			</if>
+			<if test="proCount!=null">
+				proCount,
+			</if>
+			<if test="tradeId!=null">
+				tradeId,
+			</if>
+			<if test="otherTrade!=null">
+				otherTrade,
+			</if>
+			<if test="specialityId!=null">
+				specialityId,
+			</if>
+			<if test="otherSpeciality!=null">
+				otherSpeciality,
+			</if>
+			<if test="describe!=null">
+				describe,
+			</if>
+				createTime,
+			<if test="startDate!=null">
+				startDate,
+			</if>
+			<if test="endDate!=null">
+				endDate,
+			</if>
+				state
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="contactName!=null">
+				#{contactName},
+			</if>
+			<if test="phone!=null">
+				#{phone},
+			</if>
+			<if test="area!=null">
+				#{area},
+			</if>
+			<if test="companyId!=null">
+				#{companyId},
+			</if>
+			<if test="proCount!=null">
+				#{proCount},
+			</if>
+			<if test="tradeId!=null">
+				#{tradeId},
+			</if>
+			<if test="otherTrade!=null">
+				#{otherTrade},
+			</if>
+			<if test="specialityId!=null">
+				#{specialityId},
+			</if>
+			<if test="otherSpeciality!=null">
+				#{otherSpeciality},
+			</if>
+			<if test="describe!=null">
+				#{describe},
+			</if>
+				now(),
+			<if test="startDate!=null">
+				#{startDate},
+			</if>
+			<if test="endDate!=null">
+				#{endDate},
+			</if>
+				1
+		</trim>
+	</insert>
+</mapper>

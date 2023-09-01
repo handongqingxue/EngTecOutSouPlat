@@ -28,29 +28,4 @@ public class OutSouManaController {
 		
 		return MODULE_NAME+"/needOutSou/list";
 	}
-	
-	@RequestMapping(value="/submitNeedOutSou")
-	@ResponseBody
-	public Map<String, Object> submitNeedOutSou(NeedOutSou nos) {
-		
-		Map<String, Object> jsonMap = new HashMap<String, Object>();
-
-		try {
-			int count=needOutSouService.add(nos);
-			if(count>0) {
-				jsonMap.put("message", "ok");
-				jsonMap.put("info", "添加需求外包成功");
-			}
-			else {
-				jsonMap.put("message", "no");
-				jsonMap.put("info", "添加需求外包失败");
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		finally {
-			return jsonMap;
-		}
-	}
 }
