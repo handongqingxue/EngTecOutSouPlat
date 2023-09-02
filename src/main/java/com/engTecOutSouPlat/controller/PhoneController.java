@@ -19,6 +19,8 @@ public class PhoneController {
 	private NeedOutSouService needOutSouService;
 	@Autowired
 	private ProOutSouService proOutSouService;
+	@Autowired
+	private CompanyService companyService;
 	
 	@RequestMapping(value="/submitNeedOutSou")
 	@ResponseBody
@@ -60,6 +62,31 @@ public class PhoneController {
 			else {
 				jsonMap.put("message", "no");
 				jsonMap.put("info", "添加提供外包失败");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return jsonMap;
+		}
+	}
+	
+	@RequestMapping(value="/submitCompany")
+	@ResponseBody
+	public Map<String, Object> submitCompany(Company comp) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+
+		try {
+			int count=companyService.add(comp);
+			if(count>0) {
+				jsonMap.put("message", "ok");
+				jsonMap.put("info", "添加公司成功");
+			}
+			else {
+				jsonMap.put("message", "no");
+				jsonMap.put("info", "添加公司失败");
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
