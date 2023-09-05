@@ -1,6 +1,7 @@
 package com.engTecOutSouPlat.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,5 +28,26 @@ public class OutSouManaController {
 		//publicService.selectNav(request);
 		
 		return MODULE_NAME+"/needOutSou/list";
+	}
+	
+	@RequestMapping(value="/queryNeedList")
+	@ResponseBody
+	public Map<String, Object> queryNeedList(String contactName,String phone,String area,String companyName,String enginName,String tradeName,String otherTrade,String specialityName,String otherSpeciality,
+			String createTimeStart,String createTimeEnd,String startDateStart,String startDateEnd,String endDateStart,String endDateEnd,Integer state,int page,int rows,String sort,String order) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		try {
+			int count = needOutSouService.queryForInt(contactName,phone,area,companyName,enginName,tradeName,otherTrade,specialityName,otherSpeciality,createTimeStart,createTimeEnd,startDateStart,startDateEnd,endDateStart,endDateEnd,state);
+			List<NeedOutSou> needOutSouList=needOutSouService.queryList(contactName,phone,area,companyName,enginName,tradeName,otherTrade,specialityName,otherSpeciality,createTimeStart,createTimeEnd,startDateStart,startDateEnd,endDateStart,endDateEnd,state, page, rows, sort, order);
+			
+			jsonMap.put("total", count);
+			jsonMap.put("rows", needOutSouList);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return jsonMap;
 	}
 }
