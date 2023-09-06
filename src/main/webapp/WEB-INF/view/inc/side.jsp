@@ -172,14 +172,14 @@ function showLeftMenuByQx(){
 					<div class="line_div"></div>
 					<li class="layui-nav-item xmlb_item_li">
 						<img class="pointer-img" alt="" src="<%=basePath%>resource/image/ico_3.gif" />
-						<a href="<%=basePath%>projMana/projList/list">
+						<a href="<%=basePath%>outSouMana/needOutSou/list">
 							&nbsp;&nbsp;&nbsp;需要外包
 						</a>
 					</li>
 					<div class="line_div"></div>
 					<li class="layui-nav-item xmlb_item_li">
 						<img class="pointer-img" alt="" src="<%=basePath%>resource/image/ico_3.gif" />
-						<a href="<%=basePath%>projMana/projList/list">
+						<a href="<%=basePath%>outSouMana/proOutSou/list">
 							&nbsp;&nbsp;&nbsp;提供外包
 						</a>
 					</li>
@@ -193,7 +193,7 @@ function showLeftMenuByQx(){
 					<div class="line_div"></div>
 					<li class="layui-nav-item rwblb_item_li">
 						<img class="pointer-img" alt="" src="<%=basePath%>resource/image/ico_3.gif" />
-						<a href="<%=basePath%>taskBagMana/taskBagList/list">
+						<a href="<%=basePath%>companyMana/compList/list">
 							&nbsp;&nbsp;&nbsp;公司列表
 						</a>
 					</li>
@@ -209,27 +209,6 @@ function showLeftMenuByQx(){
 						<img class="pointer-img" alt="" src="<%=basePath%>resource/image/ico_3.gif" />
 						<a href="<%=basePath%>wzgl/wzlx/list">
 							&nbsp;&nbsp;&nbsp;用户列表
-						</a>
-					</li>
-				</div>
-				<div class="first-level-div lsrw_first_div">
-					<li class="layui-nav-item first-level">
-						<a>
-							行业管理
-						</a>
-					</li>
-					<div class="line_div"></div>
-					<li class="layui-nav-item rwdlb_item_li">
-						<img class="pointer-img" alt="" src="<%=basePath%>resource/image/ico_3.gif" />
-						<a href="<%=basePath%>dwgl/yss/list">
-							&nbsp;&nbsp;&nbsp;行业列表
-						</a>
-					</li>
-					<div class="line_div"></div>
-					<li class="layui-nav-item rwdlb_item_li">
-						<img class="pointer-img" alt="" src="<%=basePath%>resource/image/ico_3.gif" />
-						<a href="<%=basePath%>dwgl/yss/list">
-							&nbsp;&nbsp;&nbsp;特长列表
 						</a>
 					</li>
 				</div>

@@ -9,12 +9,6 @@
 			<if test="companyName!=null">
 				companyName,
 			</if>
-			<if test="username!=null">
-				username,
-			</if>
-			<if test="password!=null">
-				password,
-			</if>
 				createTime,
 			<if test="address!=null">
 				address,
@@ -28,12 +22,6 @@
 			<if test="companyName!=null">
 				#{companyName},
 			</if>
-			<if test="username!=null">
-				#{username},
-			</if>
-			<if test="password!=null">
-				#{password},
-			</if>
 				now(),
 			<if test="address!=null">
 				#{address},
@@ -43,4 +31,36 @@
 			</if>
 		</trim>
 	</insert>
+	<select id="queryForInt" resultType="java.lang.Integer">
+		select count(*) from company where 1=1
+		<if test="companyName!=''&amp;companyName!=null">
+			and companyName like CONCAT('%',#{companyName},'%')
+		</if>
+		<if test="address!=''&amp;address!=null">
+			and address like CONCAT('%',#{address},'%')
+		</if>
+		<if test="industry!=''&amp;industry!=null">
+			and industry like CONCAT('%',#{industry},'%')
+		</if>
+		<if test="createTimeStart!=''&amp;createTimeStart!=null&amp;createTimeEnd!=''&amp;createTimeEnd!=null">
+			and createTime between #{createTimeStart} and #{createTimeEnd}
+		</if>
+	</select>
+	<select id="queryList" resultType="com.engTecOutSouPlat.entity.Company">
+		select * from company where 1=1
+		<if test="companyName!=''&amp;companyName!=null">
+			and companyName like CONCAT('%',#{companyName},'%')
+		</if>
+		<if test="address!=''&amp;address!=null">
+			and address like CONCAT('%',#{address},'%')
+		</if>
+		<if test="industry!=''&amp;industry!=null">
+			and industry like CONCAT('%',#{industry},'%')
+		</if>
+		<if test="createTimeStart!=''&amp;createTimeStart!=null&amp;createTimeEnd!=''&amp;createTimeEnd!=null">
+			and createTime between #{createTimeStart} and #{createTimeEnd}
+		</if>
+		order by createTime desc
+		limit #{rowNum},#{rows}
+	</select>
 </mapper>
