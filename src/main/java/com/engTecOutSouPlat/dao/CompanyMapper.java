@@ -15,4 +15,6 @@ public interface CompanyMapper {
 	List<Company> queryList(@Param("companyName") String companyName, @Param("address") String address,
 			@Param("industry") String industry, @Param("createTimeStart") String createTimeStart, @Param("createTimeEnd") String createTimeEnd, 
 			@Param("rowNum") int rowNum, @Param("rows") int rows, @Param("sort") String sort, @Param("order") String order);
+
+	int getCountByOpenId(@Param("openId") String openId);
 }

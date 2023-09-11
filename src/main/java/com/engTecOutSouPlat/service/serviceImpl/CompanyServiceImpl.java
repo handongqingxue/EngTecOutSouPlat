@@ -35,4 +35,10 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyDao.queryList(companyName, address, industry, createTimeStart, createTimeEnd, 
 				(page-1)*rows, rows, sort, order);
 	}
+
+	@Override
+	public boolean checkIfExist(String openId) {
+		// TODO Auto-generated method stub
+		return companyDao.getCountByOpenId(openId)==0?false:true;
+	}
 }

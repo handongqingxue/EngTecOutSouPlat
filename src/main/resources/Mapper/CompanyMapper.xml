@@ -6,35 +6,41 @@
 	<insert id="add" parameterType="com.engTecOutSouPlat.entity.Company">
 		insert into company
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="companyName!=null">
-				companyName,
+			<if test="name!=null">
+				name,
 			</if>
 				createTime,
 			<if test="address!=null">
 				address,
 			</if>
-			<if test="industry!=null">
-				industry,
+			<if test="tradeId!=null">
+				tradeId,
+			</if>
+			<if test="openId!=null">
+				openId,
 			</if>
 		</trim>
 		values
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="companyName!=null">
-				#{companyName},
+			<if test="name!=null">
+				#{name},
 			</if>
 				now(),
 			<if test="address!=null">
 				#{address},
 			</if>
-			<if test="industry!=null">
-				#{industry},
+			<if test="tradeId!=null">
+				#{tradeId},
+			</if>
+			<if test="openId!=null">
+				#{openId},
 			</if>
 		</trim>
 	</insert>
 	<select id="queryForInt" resultType="java.lang.Integer">
 		select count(*) from company where 1=1
 		<if test="companyName!=''&amp;companyName!=null">
-			and companyName like CONCAT('%',#{companyName},'%')
+			and name like CONCAT('%',#{companyName},'%')
 		</if>
 		<if test="address!=''&amp;address!=null">
 			and address like CONCAT('%',#{address},'%')
@@ -49,7 +55,7 @@
 	<select id="queryList" resultType="com.engTecOutSouPlat.entity.Company">
 		select * from company where 1=1
 		<if test="companyName!=''&amp;companyName!=null">
-			and companyName like CONCAT('%',#{companyName},'%')
+			and name like CONCAT('%',#{companyName},'%')
 		</if>
 		<if test="address!=''&amp;address!=null">
 			and address like CONCAT('%',#{address},'%')
@@ -62,5 +68,8 @@
 		</if>
 		order by createTime desc
 		limit #{rowNum},#{rows}
+	</select>
+	<select id="getCountByOpenId" resultType="java.lang.Integer">
+		select count(*) from company where openId=#{openId}
 	</select>
 </mapper>

@@ -123,4 +123,29 @@ public class PhoneController {
 			return jsonMap;
 		}
 	}
+	
+	@RequestMapping(value="/checkCompIfExist")
+	@ResponseBody
+	public Map<String, Object> checkCompIfExist(String openId) {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+
+		try {
+			boolean exist=companyService.checkIfExist(openId);
+			if(exist) {
+				jsonMap.put("exist", true);
+				jsonMap.put("message", "用户已添加公司");
+			}
+			else {
+				jsonMap.put("exist", false);
+				jsonMap.put("message", "用户未添加公司");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return jsonMap;
+		}
+	}
 }

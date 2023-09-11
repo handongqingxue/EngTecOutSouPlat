@@ -15,8 +15,8 @@
 			<if test="area!=null">
 				area,
 			</if>
-			<if test="companyId!=null">
-				companyId,
+			<if test="openId!=null">
+				openId,
 			</if>
 			<if test="enginName!=null">
 				enginName,
@@ -59,8 +59,8 @@
 			<if test="area!=null">
 				#{area},
 			</if>
-			<if test="companyId!=null">
-				#{companyId},
+			<if test="openId!=null">
+				#{openId},
 			</if>
 			<if test="enginName!=null">
 				#{enginName},

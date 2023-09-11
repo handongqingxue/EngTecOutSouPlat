@@ -9,11 +9,11 @@ public class Company {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getCompanyName() {
-		return companyName;
+	public String getName() {
+		return name;
 	}
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getCreateTime() {
 		return createTime;
@@ -27,14 +27,21 @@ public class Company {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getIndustry() {
-		return industry;
+	public Integer getTradeId() {
+		return tradeId;
 	}
-	public void setIndustry(String industry) {
-		this.industry = industry;
+	public void setTradeId(Integer tradeId) {
+		this.tradeId = tradeId;
 	}
-	private String companyName;
+	public String getOpenId() {
+		return openId;
+	}
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
+	private String name;
 	private String createTime;
 	private String address;
-	private String industry;
+	private Integer tradeId;
+	private String openId;
 }
