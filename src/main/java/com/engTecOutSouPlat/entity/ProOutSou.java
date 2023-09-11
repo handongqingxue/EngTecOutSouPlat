@@ -27,11 +27,11 @@ public class ProOutSou {
 	public void setArea(String area) {
 		this.area = area;
 	}
-	public Integer getCompanyId() {
-		return companyId;
+	public String getOpenId() {
+		return openId;
 	}
-	public void setCompanyId(Integer companyId) {
-		this.companyId = companyId;
+	public void setOpenId(String openId) {
+		this.openId = openId;
 	}
 	public Integer getProCount() {
 		return proCount;
@@ -96,7 +96,7 @@ public class ProOutSou {
 	private String contactName;
 	private String phone;
 	private String area;
-	private Integer companyId;
+	private String openId;
 	private Integer proCount;
 	private Integer tradeId;
 	private String otherTrade;

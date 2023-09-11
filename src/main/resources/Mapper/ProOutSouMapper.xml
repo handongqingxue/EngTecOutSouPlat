@@ -34,7 +34,7 @@
 				otherSpeciality,
 			</if>
 			<if test="describe!=null">
-				describe,
+				`describe`,
 			</if>
 				createTime,
 			<if test="startDate!=null">

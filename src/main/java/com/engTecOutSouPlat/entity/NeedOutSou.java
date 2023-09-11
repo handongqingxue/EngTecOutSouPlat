@@ -27,11 +27,11 @@ public class NeedOutSou {
 	public void setArea(String area) {
 		this.area = area;
 	}
-	public Integer getCompanyId() {
-		return companyId;
+	public String getOpenId() {
+		return openId;
 	}
-	public void setCompanyId(Integer companyId) {
-		this.companyId = companyId;
+	public void setOpenId(String openId) {
+		this.openId = openId;
 	}
 	public String getEnginName() {
 		return enginName;
@@ -102,7 +102,7 @@ public class NeedOutSou {
 	private String contactName;
 	private String phone;
 	private String area;
-	private Integer companyId;
+	private String openId;
 	private String enginName;
 	private Integer needCount;
 	private Integer tradeId;
