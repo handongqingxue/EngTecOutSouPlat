@@ -124,6 +124,56 @@ public class PhoneController {
 		}
 	}
 	
+	@RequestMapping(value="/editCompany")
+	@ResponseBody
+	public Map<String, Object> editCompany(Company comp) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+
+		try {
+			int count=companyService.edit(comp);
+			if(count>0) {
+				jsonMap.put("message", "ok");
+				jsonMap.put("info", "编辑公司成功");
+			}
+			else {
+				jsonMap.put("message", "no");
+				jsonMap.put("info", "编辑公司失败");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return jsonMap;
+		}
+	}
+	
+	@RequestMapping(value="/getCompanyByOpenId")
+	@ResponseBody
+	public Map<String, Object> getCompanyByOpenId(String openId) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+
+		try {
+			Company company=companyService.getByOpenId(openId);
+			if(company==null) {
+				jsonMap.put("message", "no");
+				jsonMap.put("info", "暂无公司");
+			}
+			else {
+				jsonMap.put("message", "ok");
+				jsonMap.put("company", company);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return jsonMap;
+		}
+	}
+	
 	@RequestMapping(value="/checkCompIfExist")
 	@ResponseBody
 	public Map<String, Object> checkCompIfExist(String openId) {

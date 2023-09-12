@@ -10,8 +10,11 @@
 				name,
 			</if>
 				createTime,
-			<if test="address!=null">
-				address,
+			<if test="contactName!=null">
+				contactName,
+			</if>
+			<if test="phone!=null">
+				phone,
 			</if>
 			<if test="tradeId!=null">
 				tradeId,
@@ -26,8 +29,11 @@
 				#{name},
 			</if>
 				now(),
-			<if test="address!=null">
-				#{address},
+			<if test="contactName!=null">
+				#{contactName},
+			</if>
+			<if test="phone!=null">
+				#{phone},
 			</if>
 			<if test="tradeId!=null">
 				#{tradeId},
@@ -37,6 +43,24 @@
 			</if>
 		</trim>
 	</insert>
+	<update id="editByOpenId" parameterType="com.engTecOutSouPlat.entity.Company">
+		update company set 
+		<trim suffixOverrides=",">
+			<if test="name!=null">
+				name=#{name},
+			</if>
+			<if test="contactName!=null">
+				contactName=#{contactName},
+			</if>
+			<if test="phone!=null">
+				phone=#{phone},
+			</if>
+			<if test="tradeId!=null">
+				tradeId=#{tradeId},
+			</if>
+		</trim>
+		 where openId=#{openId}
+	</update>
 	<select id="queryForInt" resultType="java.lang.Integer">
 		select count(*) from company where 1=1
 		<if test="companyName!=''&amp;companyName!=null">
@@ -71,5 +95,8 @@
 	</select>
 	<select id="getCountByOpenId" resultType="java.lang.Integer">
 		select count(*) from company where openId=#{openId}
+	</select>
+	<select id="getByOpenId" resultType="com.engTecOutSouPlat.entity.Company">
+		select * from company where openId=#{openId}
 	</select>
 </mapper>

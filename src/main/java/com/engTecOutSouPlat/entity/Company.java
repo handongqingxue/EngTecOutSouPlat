@@ -21,11 +21,17 @@ public class Company {
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
-	public String getAddress() {
-		return address;
+	public String getContactName() {
+		return contactName;
 	}
-	public void setAddress(String address) {
-		this.address = address;
+	public void setContactName(String contactName) {
+		this.contactName = contactName;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	public Integer getTradeId() {
 		return tradeId;
@@ -41,7 +47,8 @@ public class Company {
 	}
 	private String name;
 	private String createTime;
-	private String address;
+	private String contactName;
+	private String phone;
 	private Integer tradeId;
 	private String openId;
 }

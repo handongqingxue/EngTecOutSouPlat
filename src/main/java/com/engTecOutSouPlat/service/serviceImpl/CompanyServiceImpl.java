@@ -22,6 +22,12 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
+	public int edit(Company c) {
+		// TODO Auto-generated method stub
+		return companyDao.editByOpenId(c);
+	}
+
+	@Override
 	public int queryForInt(String companyName, String address, String industry, String createTimeStart,
 			String createTimeEnd) {
 		// TODO Auto-generated method stub
@@ -40,5 +46,11 @@ public class CompanyServiceImpl implements CompanyService {
 	public boolean checkIfExist(String openId) {
 		// TODO Auto-generated method stub
 		return companyDao.getCountByOpenId(openId)==0?false:true;
+	}
+
+	@Override
+	public Company getByOpenId(String openId) {
+		// TODO Auto-generated method stub
+		return companyDao.getByOpenId(openId);
 	}
 }
