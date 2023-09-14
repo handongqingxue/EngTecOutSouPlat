@@ -22,10 +22,9 @@
 .tab1_div .toolbar .row_div .area_span,
 .tab1_div .toolbar .row_div .companyName_span,
 .tab1_div .toolbar .row_div .enginName_span,
-.tab1_div .toolbar .row_div .tradeName_span,
+.tab1_div .toolbar .row_div .trade_span,
 .tab1_div .toolbar .row_div .otherTrade_span,
-.tab1_div .toolbar .row_div .specialityName_span,
-.tab1_div .toolbar .row_div .otherSpeciality_span,
+.tab1_div .toolbar .row_div .speciality_span,
 .tab1_div .toolbar .row_div .createTime_span,
 .tab1_div .toolbar .row_div .startDate_span,
 .tab1_div .toolbar .row_div .endDate_span,
@@ -37,10 +36,8 @@
 .tab1_div .toolbar .row_div .area_inp,
 .tab1_div .toolbar .row_div .companyName_inp,
 .tab1_div .toolbar .row_div .enginName_inp,
-.tab1_div .toolbar .row_div .tradeName_inp,
 .tab1_div .toolbar .row_div .otherTrade_inp,
-.tab1_div .toolbar .row_div .specialityName_inp,
-.tab1_div .toolbar .row_div .otherSpeciality_inp{
+.tab1_div .toolbar .row_div .speciality_inp{
 	width: 120px;
 	height: 25px;
 }
@@ -49,7 +46,10 @@
 <script type="text/javascript">
 var path='<%=basePath %>';
 var outSouManaPath=path+'outSouMana/';
+var phonePath=path+'phone/';
+var tradeList;
 $(function(){
+	initTradeCBB();
 	initCreateTimeStartDTB();
 	initCreateTimeEndDTB();
 	initStartDateStartDB();
@@ -60,6 +60,41 @@ $(function(){
 	initSearchLB();
 	initTab1();
 });
+
+function initTradeCBB(){
+	var data=[];
+	data.push({"value":"","text":"请选择"});
+	$.post(phonePath+"initTradeCBBData",
+		function(result){
+			if(result.message=="ok"){
+				tradeList=result.tradeList;
+				for(var i=0;i<tradeList.length;i++){
+					var trade=tradeList[i];
+					data.push({"value":trade.id,"text":trade.name});
+				}
+				
+				tradeCBB=$("#trade_cbb").combobox({
+					valueField:"value",
+					textField:"text",
+					//multiple:true,
+					data:data
+				});
+			}
+		}
+	,"json");
+}
+
+function getTradeNameById(tradeId){
+	var tradeName;
+	for(var i=0;i<tradeList.length;i++){
+		var trade=tradeList[i];
+		if(tradeId==trade.id){
+			tradeName=trade.name;
+			break;
+		}
+	}
+	return tradeName;
+}
 
 function initCreateTimeStartDTB(){
 	createTimeStartDTB=$("#createTimeStart_dtb").datetimebox({
@@ -101,7 +136,7 @@ function initStateCBB(){
 	var data=[];
 	data.push({"value":"","text":"请选择"});
 	data.push({"value":"1","text":"未外包"});
-	data.push({"value":"2","text":"未外包"});
+	data.push({"value":"2","text":"已外包"});
 	
 	stateCBB=$("#state_cbb").combobox({
 		valueField:"value",
@@ -122,8 +157,7 @@ function initSearchLB(){
 			var enginName=$("#toolbar #enginName").val();
 			var tradeName=$("#toolbar #tradeName").val();
 			var otherTrade=$("#toolbar #otherTrade").val();
-			var specialityName=$("#toolbar #specialityName").val();
-			var otherSpeciality=$("#toolbar #otherSpeciality").val();
+			var speciality=$("#toolbar #speciality").val();
 			var createTimeStart=createTimeStartDTB.datetimebox("getValue");
 			var createTimeEnd=createTimeEndDTB.datetimebox("getValue");
 			var startDateStart=startDateStartDB.datebox("getValue");
@@ -132,9 +166,8 @@ function initSearchLB(){
 			var endDateEnd=endDateEndDB.datebox("getValue");
 			var state=stateCBB.combobox("getValue");
 			
-			tab1.datagrid("load",{contactName:contactName,phone:phone,area:area,companyName:companyName,
-				enginName:enginName,tradeName:tradeName,otherTrade:otherTrade,specialityName:specialityName,
-				otherSpeciality:otherSpeciality,createTimeStart:createTimeStart,createTimeEnd:createTimeEnd,
+			tab1.datagrid("load",{contactName:contactName,phone:phone,area:area,companyName:companyName,enginName:enginName,
+				tradeName:tradeName,otherTrade:otherTrade,speciality:speciality,createTimeStart:createTimeStart,createTimeEnd:createTimeEnd,
 				startDateStart:startDateStart,startDateEnd:startDateEnd,endDateStart:endDateStart,endDateEnd:endDateEnd,state:state});
 		}
 	});
@@ -154,10 +187,11 @@ function initTab1(){
 			{field:"area",title:"地区",width:150},
 			{field:"companyName",title:"公司",width:150},
 			{field:"enginName",title:"工程名",width:150},
-			{field:"tradeName",title:"行业",width:150},
+			{field:"tradeId",title:"行业",width:150,formatter:function(value,row){
+            	return getTradeNameById(value);
+            }},
 			{field:"otherTrade",title:"其他行业",width:150},
-			{field:"specialityName",title:"特长",width:150},
-			{field:"otherSpeciality",title:"其他特长",width:150},
+			{field:"speciality",title:"特长",width:150},
 			{field:"createTime",title:"创建时间",width:150},
 			{field:"startDate",title:"开始日期",width:150},
 			{field:"endDate",title:"结束日期",width:150},
@@ -181,7 +215,7 @@ function initTab1(){
         onLoadSuccess:function(data){
 			if(data.total==0){
 				$(this).datagrid("appendRow",{contactName:"<div style=\"text-align:center;\">暂无信息<div>"});
-				$(this).datagrid("mergeCells",{index:0,field:"contactName",colspan:14});
+				$(this).datagrid("mergeCells",{index:0,field:"contactName",colspan:13});
 				data.total=0;
 			}
 			
@@ -224,24 +258,22 @@ function setFitWidthInParent(parent,self){
 				<input type="text" class="companyName_inp" id="companyName" placeholder="请输入公司"/>
 				<span class="enginName_span">工程名：</span>
 				<input type="text" class="enginName_inp" id="enginName" placeholder="请输入工程名"/>
-				<span class="tradeName_span">行业：</span>
-				<input type="text" class="tradeName_inp" id="tradeName" placeholder="请输入行业"/>
+				<span class="trade_span">行业：</span>
+				<input id="trade_cbb"/>
 			</div>
 			<div class="row_div">
 				<span class="otherTrade_span">其他行业：</span>
 				<input type="text" class="otherTrade_inp" id="otherTrade" placeholder="请输入其他行业"/>
-				<span class="specialityName_span">特长：</span>
-				<input type="text" class="specialityName_inp" id="specialityName" placeholder="请输入特长"/>
-				<span class="otherSpeciality_span">其他特长：</span>
-				<input type="text" class="otherSpeciality_inp" id="otherSpeciality" placeholder="请输入其他特长"/>
+				<span class="speciality_span">特长：</span>
+				<input type="text" class="speciality_inp" id="speciality" placeholder="请输入特长"/>
 				<span class="createTime_span">创建时间：</span>
 				<input id="createTimeStart_dtb"/>-
 				<input id="createTimeEnd_dtb"/>
-			</div>
-			<div class="row_div">
 				<span class="startDate_span">开始日期：</span>
 				<input id="startDateStart_db"/>-
 				<input id="startDateEnd_db"/>
+			</div>
+			<div class="row_div">
 				<span class="endDate_span">结束日期：</span>
 				<input id="endDateStart_db"/>-
 				<input id="endDateEnd_db"/>

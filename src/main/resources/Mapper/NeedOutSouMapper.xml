@@ -167,4 +167,54 @@
 		order by createTime desc
 		limit #{rowNum},#{rows}
 	</select>
+	<select id="getCountByOpenId" resultType="java.lang.Integer">
+		select count(*) from need_out_sou where openId=#{openId}
+		<if test="enginName!=''&amp;enginName!=null">
+			and enginName like CONCAT('%',#{enginName},'%')
+		</if>
+		<if test="tradeId!=''&amp;tradeId!=null">
+			and tradeId=#{tradeId}
+		</if>
+		<if test="otherTrade!=''&amp;otherTrade!=null">
+			and otherTrade like CONCAT('%',#{otherTrade},'%')
+		</if>
+		<if test="speciality!=''&amp;speciality!=null">
+			and speciality like CONCAT('%',#{speciality},'%')
+		</if>
+		<if test="createTimeStart!=''&amp;createTimeStart!=null&amp;createTimeEnd!=''&amp;createTimeEnd!=null">
+			and createTime between #{createTimeStart} and #{createTimeEnd}
+		</if>
+		<if test="startDateStart!=''&amp;startDateStart!=null&amp;startDateEnd!=''&amp;startDateEnd!=null">
+			and startDate between #{startDateStart} and #{startDateEnd}
+		</if>
+		<if test="endDateStart!=''&amp;endDateStart!=null&amp;endDateEnd!=''&amp;endDateEnd!=null">
+			and endDate between #{endDateStart} and #{endDateEnd}
+		</if>
+	</select>
+	<select id="getListByOpenId" resultType="com.engTecOutSouPlat.entity.NeedOutSou">
+		select * from need_out_sou where openId=#{openId}
+		<if test="enginName!=''&amp;enginName!=null">
+			and enginName like CONCAT('%',#{enginName},'%')
+		</if>
+		<if test="tradeId!=''&amp;tradeId!=null">
+			and tradeId=#{tradeId}
+		</if>
+		<if test="otherTrade!=''&amp;otherTrade!=null">
+			and otherTrade like CONCAT('%',#{otherTrade},'%')
+		</if>
+		<if test="speciality!=''&amp;speciality!=null">
+			and speciality like CONCAT('%',#{speciality},'%')
+		</if>
+		<if test="createTimeStart!=''&amp;createTimeStart!=null&amp;createTimeEnd!=''&amp;createTimeEnd!=null">
+			and createTime between #{createTimeStart} and #{createTimeEnd}
+		</if>
+		<if test="startDateStart!=''&amp;startDateStart!=null&amp;startDateEnd!=''&amp;startDateEnd!=null">
+			and startDate between #{startDateStart} and #{startDateEnd}
+		</if>
+		<if test="endDateStart!=''&amp;endDateStart!=null&amp;endDateEnd!=''&amp;endDateEnd!=null">
+			and endDate between #{endDateStart} and #{endDateEnd}
+		</if>
+		order by createTime desc
+		limit #{rowNum},#{rows}
+	</select>
 </mapper>

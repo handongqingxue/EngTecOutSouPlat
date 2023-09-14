@@ -41,4 +41,22 @@ public class NeedOutSouServiceImpl implements NeedOutSouService {
 				createTimeStart, createTimeEnd, startDateStart, startDateEnd,
 				endDateStart, endDateEnd, state, (page-1)*rows, rows, sort, order);
 	}
+
+	@Override
+	public int getCountByOpenId(String enginName, Integer tradeId, String otherTrade, String speciality,
+			String createTimeStart, String createTimeEnd, String startDateStart, String startDateEnd,
+			String endDateStart, String endDateEnd, String openId) {
+		// TODO Auto-generated method stub
+		return needOutSouDao.getCountByOpenId(enginName, tradeId, otherTrade, speciality, createTimeStart, createTimeEnd, 
+				startDateStart, startDateEnd, endDateStart, endDateEnd, openId);
+	}
+
+	@Override
+	public List<NeedOutSou> getListByOpenId(String enginName, Integer tradeId, String otherTrade, String speciality,
+			String createTimeStart, String createTimeEnd, String startDateStart, String startDateEnd,
+			String endDateStart, String endDateEnd, String openId, int page, int rows) {
+		// TODO Auto-generated method stub
+		return needOutSouDao.getListByOpenId(enginName, tradeId, otherTrade, speciality, createTimeStart, createTimeEnd, 
+				startDateStart, startDateEnd, endDateStart, endDateEnd, openId, (page-1)*rows, rows);
+	}
 }

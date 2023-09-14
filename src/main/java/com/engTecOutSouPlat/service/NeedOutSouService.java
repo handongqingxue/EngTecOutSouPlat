@@ -17,4 +17,12 @@ public interface NeedOutSouService {
 			Integer tradeId, String otherTrade, String speciality, String createTimeStart,
 			String createTimeEnd, String startDateStart, String startDateEnd, String endDateStart, String endDateEnd,
 			Integer state, int page, int rows, String sort, String order);
+
+	int getCountByOpenId(String enginName, Integer tradeId, String otherTrade, String speciality,
+			String createTimeStart, String createTimeEnd, String startDateStart, String startDateEnd,
+			String endDateStart, String endDateEnd, String openId);
+
+	List<NeedOutSou> getListByOpenId(String enginName, Integer tradeId, String otherTrade, String speciality,
+			String createTimeStart, String createTimeEnd, String startDateStart, String startDateEnd,
+			String endDateStart, String endDateEnd, String openId, int page, int rows);
 }

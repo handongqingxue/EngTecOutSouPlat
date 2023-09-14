@@ -47,6 +47,7 @@
 var path='<%=basePath %>';
 var outSouManaPath=path+'outSouMana/';
 var phonePath=path+'phone/';
+var tradeList;
 $(function(){
 	initTradeCBB();
 	initCreateTimeStartDTB();
@@ -66,7 +67,7 @@ function initTradeCBB(){
 	$.post(phonePath+"initTradeCBBData",
 		function(result){
 			if(result.message=="ok"){
-				var tradeList=result.tradeList;
+				tradeList=result.tradeList;
 				for(var i=0;i<tradeList.length;i++){
 					var trade=tradeList[i];
 					data.push({"value":trade.id,"text":trade.name});
@@ -81,6 +82,18 @@ function initTradeCBB(){
 			}
 		}
 	,"json");
+}
+
+function getTradeNameById(tradeId){
+	var tradeName;
+	for(var i=0;i<tradeList.length;i++){
+		var trade=tradeList[i];
+		if(tradeId==trade.id){
+			tradeName=trade.name;
+			break;
+		}
+	}
+	return tradeName;
 }
 
 function initCreateTimeStartDTB(){
@@ -174,9 +187,11 @@ function initTab1(){
 			{field:"area",title:"地区",width:150},
 			{field:"companyName",title:"公司",width:150},
 			{field:"enginName",title:"工程名",width:150},
-			{field:"tradeName",title:"行业",width:150},
+			{field:"tradeId",title:"行业",width:150,formatter:function(value,row){
+            	return getTradeNameById(value);
+            }},
 			{field:"otherTrade",title:"其他行业",width:150},
-			{field:"specialityName",title:"特长",width:150},
+			{field:"speciality",title:"特长",width:150},
 			{field:"createTime",title:"创建时间",width:150},
 			{field:"startDate",title:"开始日期",width:150},
 			{field:"endDate",title:"结束日期",width:150},
