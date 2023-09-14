@@ -104,17 +104,14 @@
 		<if test="enginName!=''&amp;enginName!=null">
 			and enginName like CONCAT('%',#{enginName},'%')
 		</if>
-		<if test="tradeName!=''&amp;tradeName!=null">
-			and tradeName like CONCAT('%',#{tradeName},'%')
+		<if test="tradeId!=''&amp;tradeId!=null">
+			and tradeId=#{tradeId}
 		</if>
 		<if test="otherTrade!=''&amp;otherTrade!=null">
 			and otherTrade like CONCAT('%',#{otherTrade},'%')
 		</if>
-		<if test="specialityName!=''&amp;specialityName!=null">
-			and specialityName like CONCAT('%',#{specialityName},'%')
-		</if>
-		<if test="otherSpeciality!=''&amp;otherSpeciality!=null">
-			and otherSpeciality like CONCAT('%',#{otherSpeciality},'%')
+		<if test="speciality!=''&amp;speciality!=null">
+			and speciality like CONCAT('%',#{speciality},'%')
 		</if>
 		<if test="createTimeStart!=''&amp;createTimeStart!=null&amp;createTimeEnd!=''&amp;createTimeEnd!=null">
 			and createTime between #{createTimeStart} and #{createTimeEnd}
@@ -146,17 +143,14 @@
 		<if test="enginName!=''&amp;enginName!=null">
 			and enginName like CONCAT('%',#{enginName},'%')
 		</if>
-		<if test="tradeName!=''&amp;tradeName!=null">
-			and tradeName like CONCAT('%',#{tradeName},'%')
+		<if test="tradeId!=''&amp;tradeId!=null">
+			and tradeId=#{tradeId}
 		</if>
 		<if test="otherTrade!=''&amp;otherTrade!=null">
 			and otherTrade like CONCAT('%',#{otherTrade},'%')
 		</if>
-		<if test="specialityName!=''&amp;specialityName!=null">
-			and specialityName like CONCAT('%',#{specialityName},'%')
-		</if>
-		<if test="otherSpeciality!=''&amp;otherSpeciality!=null">
-			and otherSpeciality like CONCAT('%',#{otherSpeciality},'%')
+		<if test="speciality!=''&amp;speciality!=null">
+			and speciality like CONCAT('%',#{speciality},'%')
 		</if>
 		<if test="createTimeStart!=''&amp;createTimeStart!=null&amp;createTimeEnd!=''&amp;createTimeEnd!=null">
 			and createTime between #{createTimeStart} and #{createTimeEnd}

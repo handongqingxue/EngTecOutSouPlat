@@ -23,21 +23,21 @@ public class NeedOutSouServiceImpl implements NeedOutSouService {
 
 	@Override
 	public int queryForInt(String contactName, String phone, String area, String companyName, String enginName,
-			String tradeName, String otherTrade, String specialityName, String otherSpeciality, String createTimeStart,
+			Integer tradeId, String otherTrade, String speciality, String createTimeStart,
 			String createTimeEnd, String startDateStart, String startDateEnd, String endDateStart, String endDateEnd,
 			Integer state) {
 		// TODO Auto-generated method stub
-		return needOutSouDao.queryForInt(contactName, phone, area, companyName, enginName, tradeName, otherTrade, specialityName, otherSpeciality, createTimeStart,
+		return needOutSouDao.queryForInt(contactName, phone, area, companyName, enginName, tradeId, otherTrade, speciality, createTimeStart,
 				createTimeEnd, startDateStart, startDateEnd, endDateStart, endDateEnd, state);
 	}
 
 	@Override
 	public List<NeedOutSou> queryList(String contactName, String phone, String area, String companyName,
-			String enginName, String tradeName, String otherTrade, String specialityName, String otherSpeciality,
+			String enginName, Integer tradeId, String otherTrade, String speciality, 
 			String createTimeStart, String createTimeEnd, String startDateStart, String startDateEnd,
 			String endDateStart, String endDateEnd, Integer state, int page, int rows, String sort, String order) {
 		// TODO Auto-generated method stub
-		return needOutSouDao.queryList(contactName, phone, area, companyName, enginName, tradeName, otherTrade, specialityName, otherSpeciality,
+		return needOutSouDao.queryList(contactName, phone, area, companyName, enginName, tradeId, otherTrade, speciality, 
 				createTimeStart, createTimeEnd, startDateStart, startDateEnd,
 				endDateStart, endDateEnd, state, (page-1)*rows, rows, sort, order);
 	}

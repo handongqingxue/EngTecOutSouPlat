@@ -1,7 +1,6 @@
 package com.engTecOutSouPlat.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.engTecOutSouPlat.entity.*;
 import com.engTecOutSouPlat.service.*;
+import com.engTecOutSouPlat.util.*;
 
 @Controller
 @RequestMapping("/phone")
@@ -197,5 +197,33 @@ public class PhoneController {
 		finally {
 			return jsonMap;
 		}
+	}
+
+	@RequestMapping(value="/initTradeCBBData")
+	@ResponseBody
+	public Map<String, Object> initTradeCBBData() {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		List<Map<String, Object>> tradeMapList=new ArrayList<Map<String, Object>>();
+		Map<String, Object> tradeMap=null;
+		for (int i = 0; i < Constant.TRADE_NAME_ARR.length; i++) {
+			tradeMap=new HashMap<String, Object>();
+			tradeMap.put("id", i+1);
+			tradeMap.put("name", Constant.TRADE_NAME_ARR[i]);
+			
+			tradeMapList.add(tradeMap);
+		}
+		
+		if(tradeMapList.size()==0) {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "暂无行业");
+		}
+		else {
+			jsonMap.put("message", "ok");
+			jsonMap.put("tradeList", tradeMapList);
+		}
+		
+		return jsonMap;
 	}
 }
