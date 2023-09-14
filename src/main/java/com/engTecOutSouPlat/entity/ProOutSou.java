@@ -51,17 +51,11 @@ public class ProOutSou {
 	public void setOtherTrade(String otherTrade) {
 		this.otherTrade = otherTrade;
 	}
-	public Integer getSpecialityId() {
-		return specialityId;
+	public String getSpeciality() {
+		return speciality;
 	}
-	public void setSpecialityId(Integer specialityId) {
-		this.specialityId = specialityId;
-	}
-	public String getOtherSpeciality() {
-		return otherSpeciality;
-	}
-	public void setOtherSpeciality(String otherSpeciality) {
-		this.otherSpeciality = otherSpeciality;
+	public void setSpeciality(String speciality) {
+		this.speciality = speciality;
 	}
 	public String getDescribe() {
 		return describe;
@@ -100,8 +94,7 @@ public class ProOutSou {
 	private Integer proCount;
 	private Integer tradeId;
 	private String otherTrade;
-	private Integer specialityId;
-	private String otherSpeciality;
+	private String speciality;
 	private String describe;
 	private String createTime;
 	private String startDate;

@@ -27,11 +27,8 @@
 			<if test="otherTrade!=null">
 				otherTrade,
 			</if>
-			<if test="specialityId!=null">
-				specialityId,
-			</if>
-			<if test="otherSpeciality!=null">
-				otherSpeciality,
+			<if test="speciality!=null">
+				speciality,
 			</if>
 			<if test="describe!=null">
 				`describe`,
@@ -68,11 +65,8 @@
 			<if test="otherTrade!=null">
 				#{otherTrade},
 			</if>
-			<if test="specialityId!=null">
-				#{specialityId},
-			</if>
-			<if test="otherSpeciality!=null">
-				#{otherSpeciality},
+			<if test="speciality!=null">
+				#{speciality},
 			</if>
 			<if test="describe!=null">
 				#{describe},
