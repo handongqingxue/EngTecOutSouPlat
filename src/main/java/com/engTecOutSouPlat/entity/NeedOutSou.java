@@ -57,6 +57,18 @@ public class NeedOutSou {
 	public void setOtherTrade(String otherTrade) {
 		this.otherTrade = otherTrade;
 	}
+	public Integer getPostId() {
+		return postId;
+	}
+	public void setPostId(Integer postId) {
+		this.postId = postId;
+	}
+	public String getOtherPost() {
+		return otherPost;
+	}
+	public void setOtherPost(String otherPost) {
+		this.otherPost = otherPost;
+	}
 	public String getSpeciality() {
 		return speciality;
 	}
@@ -87,6 +99,12 @@ public class NeedOutSou {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
+	public Integer getDayCount() {
+		return dayCount;
+	}
+	public void setDayCount(Integer dayCount) {
+		this.dayCount = dayCount;
+	}
 	public Integer getState() {
 		return state;
 	}
@@ -101,10 +119,13 @@ public class NeedOutSou {
 	private Integer needCount;
 	private Integer tradeId;
 	private String otherTrade;
+	private Integer postId;
+	private String otherPost;
 	private String speciality;
 	private String describe;
 	private String createTime;
 	private String startDate;
 	private String endDate;
+	private Integer dayCount;
 	private Integer state;
 }

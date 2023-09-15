@@ -226,20 +226,45 @@ public class PhoneController {
 		
 		return jsonMap;
 	}
+
+	@RequestMapping(value="/initPostCBBData")
+	@ResponseBody
+	public Map<String, Object> initPostCBBData() {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		List<Map<String, Object>> postMapList=new ArrayList<Map<String, Object>>();
+		Map<String, Object> postMap=null;
+		for (int i = 0; i < Constant.POST_NAME_ARR.length; i++) {
+			postMap=new HashMap<String, Object>();
+			postMap.put("id", i+1);
+			postMap.put("name", Constant.POST_NAME_ARR[i]);
+			
+			postMapList.add(postMap);
+		}
+		
+		if(postMapList.size()==0) {
+			jsonMap.put("message", "no");
+			jsonMap.put("info", "暂无岗位");
+		}
+		else {
+			jsonMap.put("message", "ok");
+			jsonMap.put("postList", postMapList);
+		}
+		
+		return jsonMap;
+	}
 	
 	@RequestMapping(value="/getNOSListByOpenId")
 	@ResponseBody
-	public Map<String, Object> getNOSListByOpenId(String enginName,Integer tradeId,String otherTrade,String speciality,String createTimeStart,String createTimeEnd,
-			String startDateStart,String startDateEnd,String endDateStart,String endDateEnd,String openId,int page,int rows) {
+	public Map<String, Object> getNOSListByOpenId(String openId) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
 		try {
-			int count = needOutSouService.getCountByOpenId(enginName,tradeId,otherTrade,speciality,createTimeStart,createTimeEnd,startDateStart,startDateEnd,endDateStart,endDateEnd,openId);
-			List<NeedOutSou> needOutSouList=needOutSouService.getListByOpenId(enginName,tradeId,otherTrade,speciality,createTimeStart,createTimeEnd,startDateStart,startDateEnd,endDateStart,endDateEnd,openId, page, rows);
+			List<NeedOutSou> needOutSouList=needOutSouService.getListByOpenId(openId);
 			
-			jsonMap.put("total", count);
-			if(count==0) {
+			if(needOutSouList.size()==0) {
 				jsonMap.put("status", "no");
 				jsonMap.put("message", "暂无数据");
 			}

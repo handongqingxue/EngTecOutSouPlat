@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.engTecOutSouPlat.entity.*;
 import com.engTecOutSouPlat.dao.*;
 import com.engTecOutSouPlat.service.*;
+import com.engTecOutSouPlat.util.DateUtil;
 
 @Service
 public class NeedOutSouServiceImpl implements NeedOutSouService {
@@ -43,20 +44,15 @@ public class NeedOutSouServiceImpl implements NeedOutSouService {
 	}
 
 	@Override
-	public int getCountByOpenId(String enginName, Integer tradeId, String otherTrade, String speciality,
-			String createTimeStart, String createTimeEnd, String startDateStart, String startDateEnd,
-			String endDateStart, String endDateEnd, String openId) {
+	public List<NeedOutSou> getListByOpenId(String openId) {
 		// TODO Auto-generated method stub
-		return needOutSouDao.getCountByOpenId(enginName, tradeId, otherTrade, speciality, createTimeStart, createTimeEnd, 
-				startDateStart, startDateEnd, endDateStart, endDateEnd, openId);
-	}
-
-	@Override
-	public List<NeedOutSou> getListByOpenId(String enginName, Integer tradeId, String otherTrade, String speciality,
-			String createTimeStart, String createTimeEnd, String startDateStart, String startDateEnd,
-			String endDateStart, String endDateEnd, String openId, int page, int rows) {
-		// TODO Auto-generated method stub
-		return needOutSouDao.getListByOpenId(enginName, tradeId, otherTrade, speciality, createTimeStart, createTimeEnd, 
-				startDateStart, startDateEnd, endDateStart, endDateEnd, openId, (page-1)*rows, rows);
+		List<NeedOutSou> needOutSouList = needOutSouDao.getListByOpenId(openId);
+		for (NeedOutSou needOutSou : needOutSouList) {
+			String startDate = needOutSou.getStartDate();
+			String endDate = needOutSou.getEndDate();
+			int dayCount = DateUtil.getTimeBetween(startDate, endDate, DateUtil.DAYS);
+			needOutSou.setDayCount(dayCount);
+		}
+		return needOutSouList;
 	}
 }
