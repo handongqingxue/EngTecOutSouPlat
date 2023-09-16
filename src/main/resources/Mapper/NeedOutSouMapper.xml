@@ -6,14 +6,14 @@
 	<insert id="add" parameterType="com.engTecOutSouPlat.entity.NeedOutSou">
 		insert into need_out_sou
 		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="companyName!=null">
+				companyName,
+			</if>
 			<if test="contactName!=null">
 				contactName,
 			</if>
 			<if test="phone!=null">
 				phone,
-			</if>
-			<if test="area!=null">
-				area,
 			</if>
 			<if test="openId!=null">
 				openId,
@@ -29,6 +29,9 @@
 			</if>
 			<if test="otherTrade!=null">
 				otherTrade,
+			</if>
+			<if test="post!=null">
+				post,
 			</if>
 			<if test="speciality!=null">
 				speciality,
@@ -47,14 +50,14 @@
 		</trim>
 		values
 		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="companyName!=null">
+				#{companyName},
+			</if>
 			<if test="contactName!=null">
 				#{contactName},
 			</if>
 			<if test="phone!=null">
 				#{phone},
-			</if>
-			<if test="area!=null">
-				#{area},
 			</if>
 			<if test="openId!=null">
 				#{openId},
@@ -70,6 +73,9 @@
 			</if>
 			<if test="otherTrade!=null">
 				#{otherTrade},
+			</if>
+			<if test="post!=null">
+				#{post},
 			</if>
 			<if test="speciality!=null">
 				#{speciality},
@@ -169,5 +175,8 @@
 	</select>
 	<select id="getListByOpenId" resultType="com.engTecOutSouPlat.entity.NeedOutSou">
 		select * from need_out_sou where openId=#{openId} order by createTime desc
+	</select>
+	<select id="selectById" resultType="com.engTecOutSouPlat.entity.NeedOutSou">
+		select * from need_out_sou where id=#{id}
 	</select>
 </mapper>

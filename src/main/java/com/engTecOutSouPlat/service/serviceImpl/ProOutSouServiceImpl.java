@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.engTecOutSouPlat.entity.*;
 import com.engTecOutSouPlat.dao.*;
 import com.engTecOutSouPlat.service.*;
+import com.engTecOutSouPlat.util.DateUtil;
 
 @Service
 public class ProOutSouServiceImpl implements ProOutSouService {
@@ -40,6 +41,19 @@ public class ProOutSouServiceImpl implements ProOutSouService {
 		return proOutSouDao.queryList(contactName, phone, area, companyName, enginName, tradeName, otherTrade, specialityName, otherSpeciality,
 				createTimeStart, createTimeEnd, startDateStart, startDateEnd,
 				endDateStart, endDateEnd, state, (page-1)*rows, rows, sort, order);
+	}
+
+	@Override
+	public List<ProOutSou> getListByOpenId(String openId) {
+		// TODO Auto-generated method stub
+		List<ProOutSou> proOutSouList = proOutSouDao.getListByOpenId(openId);
+		for (ProOutSou proOutSou : proOutSouList) {
+			String startDate = proOutSou.getStartDate();
+			String endDate = proOutSou.getEndDate();
+			int dayCount = DateUtil.getTimeBetween(startDate, endDate, DateUtil.DAYS);
+			proOutSou.setDayCount(dayCount);
+		}
+		return proOutSouList;
 	}
 
 }

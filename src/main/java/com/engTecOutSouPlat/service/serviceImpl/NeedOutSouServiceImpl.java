@@ -55,4 +55,10 @@ public class NeedOutSouServiceImpl implements NeedOutSouService {
 		}
 		return needOutSouList;
 	}
+
+	@Override
+	public NeedOutSou selectById(String id) {
+		// TODO Auto-generated method stub
+		return needOutSouDao.selectById(id);
+	}
 }

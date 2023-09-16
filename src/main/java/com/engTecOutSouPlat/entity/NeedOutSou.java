@@ -9,6 +9,12 @@ public class NeedOutSou {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
 	public String getContactName() {
 		return contactName;
 	}
@@ -20,12 +26,6 @@ public class NeedOutSou {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-	public String getArea() {
-		return area;
-	}
-	public void setArea(String area) {
-		this.area = area;
 	}
 	public String getOpenId() {
 		return openId;
@@ -57,17 +57,11 @@ public class NeedOutSou {
 	public void setOtherTrade(String otherTrade) {
 		this.otherTrade = otherTrade;
 	}
-	public Integer getPostId() {
-		return postId;
+	public String getPost() {
+		return post;
 	}
-	public void setPostId(Integer postId) {
-		this.postId = postId;
-	}
-	public String getOtherPost() {
-		return otherPost;
-	}
-	public void setOtherPost(String otherPost) {
-		this.otherPost = otherPost;
+	public void setPost(String post) {
+		this.post = post;
 	}
 	public String getSpeciality() {
 		return speciality;
@@ -111,16 +105,15 @@ public class NeedOutSou {
 	public void setState(Integer state) {
 		this.state = state;
 	}
+	private String companyName;
 	private String contactName;
 	private String phone;
-	private String area;
 	private String openId;
 	private String enginName;
 	private Integer needCount;
 	private Integer tradeId;
 	private String otherTrade;
-	private Integer postId;
-	private String otherPost;
+	private String post;
 	private String speciality;
 	private String describe;
 	private String createTime;

@@ -17,4 +17,6 @@ public interface ProOutSouService {
 			String tradeName, String otherTrade, String specialityName, String otherSpeciality, String createTimeStart,
 			String createTimeEnd, String startDateStart, String startDateEnd, String endDateStart, String endDateEnd,
 			Integer state, int page, int rows, String sort, String order);
+
+	List<ProOutSou> getListByOpenId(String openId);
 }

@@ -167,4 +167,7 @@
 		order by createTime desc
 		limit #{rowNum},#{rows}
 	</select>
+	<select id="getListByOpenId" resultType="com.engTecOutSouPlat.entity.ProOutSou">
+		select * from pro_out_sou where openId=#{openId} order by createTime desc
+	</select>
 </mapper>

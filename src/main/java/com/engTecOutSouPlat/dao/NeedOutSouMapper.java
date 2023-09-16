@@ -21,4 +21,6 @@ public interface NeedOutSouMapper {
 			@Param("state") Integer state, @Param("rowNum") int rowNum, @Param("rows") int rows, @Param("sort") String sort, @Param("order") String order);
 
 	List<NeedOutSou> getListByOpenId(@Param("openId") String openId);
+
+	NeedOutSou selectById(@Param("id") String id);
 }

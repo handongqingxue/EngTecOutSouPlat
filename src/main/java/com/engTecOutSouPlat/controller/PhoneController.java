@@ -227,34 +227,6 @@ public class PhoneController {
 		return jsonMap;
 	}
 
-	@RequestMapping(value="/initPostCBBData")
-	@ResponseBody
-	public Map<String, Object> initPostCBBData() {
-
-		Map<String, Object> jsonMap = new HashMap<String, Object>();
-		
-		List<Map<String, Object>> postMapList=new ArrayList<Map<String, Object>>();
-		Map<String, Object> postMap=null;
-		for (int i = 0; i < Constant.POST_NAME_ARR.length; i++) {
-			postMap=new HashMap<String, Object>();
-			postMap.put("id", i+1);
-			postMap.put("name", Constant.POST_NAME_ARR[i]);
-			
-			postMapList.add(postMap);
-		}
-		
-		if(postMapList.size()==0) {
-			jsonMap.put("message", "no");
-			jsonMap.put("info", "暂无岗位");
-		}
-		else {
-			jsonMap.put("message", "ok");
-			jsonMap.put("postList", postMapList);
-		}
-		
-		return jsonMap;
-	}
-	
 	@RequestMapping(value="/getNOSListByOpenId")
 	@ResponseBody
 	public Map<String, Object> getNOSListByOpenId(String openId) {
@@ -271,6 +243,50 @@ public class PhoneController {
 			else {
 				jsonMap.put("status", "ok");
 				jsonMap.put("list", needOutSouList);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/getNeedOutSou")
+	@ResponseBody
+	public Map<String, Object> getNeedOutSou(String id) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		NeedOutSou nos=needOutSouService.selectById(id);
+		if(nos==null) {
+			jsonMap.put("status", "no");
+			jsonMap.put("message", "暂无数据");
+		}
+		else {
+			jsonMap.put("status", "ok");
+			jsonMap.put("needOutSou", nos);
+		}
+		
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/getPOSListByOpenId")
+	@ResponseBody
+	public Map<String, Object> getPOSListByOpenId(String openId) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		try {
+			List<ProOutSou> proOutSouList=proOutSouService.getListByOpenId(openId);
+			
+			if(proOutSouList.size()==0) {
+				jsonMap.put("status", "no");
+				jsonMap.put("message", "暂无数据");
+			}
+			else {
+				jsonMap.put("status", "ok");
+				jsonMap.put("list", proOutSouList);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

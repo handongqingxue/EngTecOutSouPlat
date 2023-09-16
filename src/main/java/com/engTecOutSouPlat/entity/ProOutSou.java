@@ -81,6 +81,12 @@ public class ProOutSou {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
+	public Integer getDayCount() {
+		return dayCount;
+	}
+	public void setDayCount(Integer dayCount) {
+		this.dayCount = dayCount;
+	}
 	public Integer getState() {
 		return state;
 	}
@@ -99,5 +105,6 @@ public class ProOutSou {
 	private String createTime;
 	private String startDate;
 	private String endDate;
+	private Integer dayCount;
 	private Integer state;
 }

@@ -19,4 +19,6 @@ public interface NeedOutSouService {
 			Integer state, int page, int rows, String sort, String order);
 
 	List<NeedOutSou> getListByOpenId(String openId);
+
+	NeedOutSou selectById(String id);
 }
