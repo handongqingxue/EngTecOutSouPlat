@@ -56,4 +56,16 @@ public class ProOutSouServiceImpl implements ProOutSouService {
 		return proOutSouList;
 	}
 
+	@Override
+	public ProOutSou selectById(String id) {
+		// TODO Auto-generated method stub
+		return proOutSouDao.selectById(id);
+	}
+
+	@Override
+	public int edit(ProOutSou pos) {
+		// TODO Auto-generated method stub
+		return proOutSouDao.edit(pos);
+	}
+
 }

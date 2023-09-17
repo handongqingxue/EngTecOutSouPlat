@@ -19,4 +19,8 @@ public interface ProOutSouService {
 			Integer state, int page, int rows, String sort, String order);
 
 	List<ProOutSou> getListByOpenId(String openId);
+
+	ProOutSou selectById(String id);
+
+	int edit(ProOutSou pos);
 }

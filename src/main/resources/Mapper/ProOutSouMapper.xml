@@ -87,6 +87,45 @@
 				1
 		</trim>
 	</insert>
+	<update id="edit" parameterType="com.engTecOutSouPlat.entity.ProOutSou">
+		update pro_out_sou set 
+		<trim suffixOverrides=",">
+			<if test="companyName!=null">
+				companyName=#{companyName},
+			</if>
+			<if test="tradeId!=null">
+				tradeId=#{tradeId},
+			</if>
+			<if test="otherTrade!=null">
+				otherTrade=#{otherTrade},
+			</if>
+			<if test="post!=null">
+				post=#{post},
+			</if>
+			<if test="proCount!=null">
+				proCount=#{proCount},
+			</if>
+			<if test="speciality!=null">
+				speciality=#{speciality},
+			</if>
+			<if test="describe!=null">
+				`describe`=#{describe},
+			</if>
+			<if test="startDate!=null">
+				startDate=#{startDate},
+			</if>
+			<if test="endDate!=null">
+				endDate=#{endDate},
+			</if>
+			<if test="contactName!=null">
+				contactName=#{contactName},
+			</if>
+			<if test="phone!=null">
+				phone=#{phone},
+			</if>
+		</trim>
+		 where id=#{id}
+	</update>
 	<select id="queryForInt" resultType="java.lang.Integer">
 		select count(*) from pro_out_sou where 1=1
 		<if test="contactName!=''&amp;contactName!=null">
@@ -175,5 +214,8 @@
 	</select>
 	<select id="getListByOpenId" resultType="com.engTecOutSouPlat.entity.ProOutSou">
 		select * from pro_out_sou where openId=#{openId} order by createTime desc
+	</select>
+	<select id="selectById" resultType="com.engTecOutSouPlat.entity.ProOutSou">
+		select * from pro_out_sou where id=#{id}
 	</select>
 </mapper>

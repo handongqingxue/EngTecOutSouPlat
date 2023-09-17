@@ -124,6 +124,31 @@ public class PhoneController {
 		}
 	}
 	
+	@RequestMapping(value="/editProOutSou")
+	@ResponseBody
+	public Map<String, Object> editProOutSou(ProOutSou pos) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+
+		try {
+			int count=proOutSouService.edit(pos);
+			if(count>0) {
+				jsonMap.put("message", "ok");
+				jsonMap.put("info", "编辑提供外包成功");
+			}
+			else {
+				jsonMap.put("message", "no");
+				jsonMap.put("info", "编辑提供外包失败");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return jsonMap;
+		}
+	}
+	
 	@RequestMapping(value="/submitCompany")
 	@ResponseBody
 	public Map<String, Object> submitCompany(Company comp) {
@@ -316,6 +341,25 @@ public class PhoneController {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		return jsonMap;
+	}
+	
+	@RequestMapping(value="/getProOutSou")
+	@ResponseBody
+	public Map<String, Object> getProOutSou(String id) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		ProOutSou pos=proOutSouService.selectById(id);
+		if(pos==null) {
+			jsonMap.put("status", "no");
+			jsonMap.put("message", "暂无数据");
+		}
+		else {
+			jsonMap.put("status", "ok");
+			jsonMap.put("proOutSou", pos);
 		}
 		
 		return jsonMap;

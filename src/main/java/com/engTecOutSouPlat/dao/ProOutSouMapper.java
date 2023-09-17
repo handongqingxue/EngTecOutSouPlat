@@ -21,4 +21,8 @@ public interface ProOutSouMapper {
 			@Param("state") Integer state, @Param("rowNum") int rowNum, @Param("rows") int rows, @Param("sort") String sort, @Param("order") String order);
 
 	List<ProOutSou> getListByOpenId(@Param("openId") String openId);
+
+	ProOutSou selectById(@Param("id") String id);
+
+	int edit(ProOutSou pos);
 }
