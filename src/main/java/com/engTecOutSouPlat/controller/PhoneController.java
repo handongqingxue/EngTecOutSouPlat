@@ -74,6 +74,31 @@ public class PhoneController {
 		}
 	}
 	
+	@RequestMapping(value="/editNeedOutSou")
+	@ResponseBody
+	public Map<String, Object> editNeedOutSou(NeedOutSou nos) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+
+		try {
+			int count=needOutSouService.edit(nos);
+			if(count>0) {
+				jsonMap.put("message", "ok");
+				jsonMap.put("info", "编辑需求外包成功");
+			}
+			else {
+				jsonMap.put("message", "no");
+				jsonMap.put("info", "编辑需求外包失败");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return jsonMap;
+		}
+	}
+	
 	@RequestMapping(value="/submitProOutSou")
 	@ResponseBody
 	public Map<String, Object> submitProOutSou(ProOutSou pos) {

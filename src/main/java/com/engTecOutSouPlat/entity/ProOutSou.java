@@ -9,35 +9,11 @@ public class ProOutSou {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getContactName() {
-		return contactName;
+	public String getCompanyName() {
+		return companyName;
 	}
-	public void setContactName(String contactName) {
-		this.contactName = contactName;
-	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	public String getArea() {
-		return area;
-	}
-	public void setArea(String area) {
-		this.area = area;
-	}
-	public String getOpenId() {
-		return openId;
-	}
-	public void setOpenId(String openId) {
-		this.openId = openId;
-	}
-	public Integer getProCount() {
-		return proCount;
-	}
-	public void setProCount(Integer proCount) {
-		this.proCount = proCount;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 	public Integer getTradeId() {
 		return tradeId;
@@ -50,6 +26,18 @@ public class ProOutSou {
 	}
 	public void setOtherTrade(String otherTrade) {
 		this.otherTrade = otherTrade;
+	}
+	public String getPost() {
+		return post;
+	}
+	public void setPost(String post) {
+		this.post = post;
+	}
+	public Integer getProCount() {
+		return proCount;
+	}
+	public void setProCount(Integer proCount) {
+		this.proCount = proCount;
 	}
 	public String getSpeciality() {
 		return speciality;
@@ -87,24 +75,43 @@ public class ProOutSou {
 	public void setDayCount(Integer dayCount) {
 		this.dayCount = dayCount;
 	}
+	public String getContactName() {
+		return contactName;
+	}
+	public void setContactName(String contactName) {
+		this.contactName = contactName;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getOpenId() {
+		return openId;
+	}
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
 	public Integer getState() {
 		return state;
 	}
 	public void setState(Integer state) {
 		this.state = state;
 	}
-	private String contactName;
-	private String phone;
-	private String area;
-	private String openId;
-	private Integer proCount;
+	private String companyName;
 	private Integer tradeId;
 	private String otherTrade;
+	private String post;
+	private Integer proCount;
 	private String speciality;
 	private String describe;
 	private String createTime;
 	private String startDate;
 	private String endDate;
 	private Integer dayCount;
+	private String contactName;
+	private String phone;
+	private String openId;
 	private Integer state;
 }

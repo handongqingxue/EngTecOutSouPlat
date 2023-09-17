@@ -10,6 +10,8 @@ public interface NeedOutSouMapper {
 
 	int add(NeedOutSou nos);
 
+	int edit(NeedOutSou nos);
+
 	int queryForInt(@Param("contactName") String contactName, @Param("phone") String phone, @Param("area") String area, @Param("companyName") String companyName, @Param("enginName") String enginName,
 			@Param("tradeId") Integer tradeId, @Param("otherTrade") String otherTrade, @Param("speciality") String speciality, @Param("createTimeStart") String createTimeStart,
 			@Param("createTimeEnd") String createTimeEnd, @Param("startDateStart") String startDateStart, @Param("startDateEnd") String startDateEnd, @Param("endDateStart") String endDateStart, @Param("endDateEnd") String endDateEnd,

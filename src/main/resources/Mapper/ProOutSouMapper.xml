@@ -6,26 +6,20 @@
 	<insert id="add" parameterType="com.engTecOutSouPlat.entity.ProOutSou">
 		insert into pro_out_sou
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="contactName!=null">
-				contactName,
-			</if>
-			<if test="phone!=null">
-				phone,
-			</if>
-			<if test="area!=null">
-				area,
-			</if>
-			<if test="openId!=null">
-				openId,
-			</if>
-			<if test="proCount!=null">
-				proCount,
+			<if test="companyName!=null">
+				companyName,
 			</if>
 			<if test="tradeId!=null">
 				tradeId,
 			</if>
 			<if test="otherTrade!=null">
 				otherTrade,
+			</if>
+			<if test="post!=null">
+				post,
+			</if>
+			<if test="proCount!=null">
+				proCount,
 			</if>
 			<if test="speciality!=null">
 				speciality,
@@ -40,30 +34,33 @@
 			<if test="endDate!=null">
 				endDate,
 			</if>
+			<if test="contactName!=null">
+				contactName,
+			</if>
+			<if test="phone!=null">
+				phone,
+			</if>
+			<if test="openId!=null">
+				openId,
+			</if>
 				state
 		</trim>
 		values
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="contactName!=null">
-				#{contactName},
-			</if>
-			<if test="phone!=null">
-				#{phone},
-			</if>
-			<if test="area!=null">
-				#{area},
-			</if>
-			<if test="openId!=null">
-				#{openId},
-			</if>
-			<if test="proCount!=null">
-				#{proCount},
+			<if test="companyName!=null">
+				#{companyName},
 			</if>
 			<if test="tradeId!=null">
 				#{tradeId},
 			</if>
 			<if test="otherTrade!=null">
 				#{otherTrade},
+			</if>
+			<if test="post!=null">
+				#{post},
+			</if>
+			<if test="proCount!=null">
+				#{proCount},
 			</if>
 			<if test="speciality!=null">
 				#{speciality},
@@ -77,6 +74,15 @@
 			</if>
 			<if test="endDate!=null">
 				#{endDate},
+			</if>
+			<if test="contactName!=null">
+				#{contactName},
+			</if>
+			<if test="phone!=null">
+				#{phone},
+			</if>
+			<if test="openId!=null">
+				#{openId},
 			</if>
 				1
 		</trim>

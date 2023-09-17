@@ -15,36 +15,6 @@ public class NeedOutSou {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-	public String getContactName() {
-		return contactName;
-	}
-	public void setContactName(String contactName) {
-		this.contactName = contactName;
-	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	public String getOpenId() {
-		return openId;
-	}
-	public void setOpenId(String openId) {
-		this.openId = openId;
-	}
-	public String getEnginName() {
-		return enginName;
-	}
-	public void setEnginName(String enginName) {
-		this.enginName = enginName;
-	}
-	public Integer getNeedCount() {
-		return needCount;
-	}
-	public void setNeedCount(Integer needCount) {
-		this.needCount = needCount;
-	}
 	public Integer getTradeId() {
 		return tradeId;
 	}
@@ -62,6 +32,18 @@ public class NeedOutSou {
 	}
 	public void setPost(String post) {
 		this.post = post;
+	}
+	public String getEnginName() {
+		return enginName;
+	}
+	public void setEnginName(String enginName) {
+		this.enginName = enginName;
+	}
+	public Integer getNeedCount() {
+		return needCount;
+	}
+	public void setNeedCount(Integer needCount) {
+		this.needCount = needCount;
 	}
 	public String getSpeciality() {
 		return speciality;
@@ -99,6 +81,24 @@ public class NeedOutSou {
 	public void setDayCount(Integer dayCount) {
 		this.dayCount = dayCount;
 	}
+	public String getContactName() {
+		return contactName;
+	}
+	public void setContactName(String contactName) {
+		this.contactName = contactName;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getOpenId() {
+		return openId;
+	}
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
 	public Integer getState() {
 		return state;
 	}
@@ -106,19 +106,19 @@ public class NeedOutSou {
 		this.state = state;
 	}
 	private String companyName;
-	private String contactName;
-	private String phone;
-	private String openId;
-	private String enginName;
-	private Integer needCount;
 	private Integer tradeId;
 	private String otherTrade;
 	private String post;
+	private String enginName;
+	private Integer needCount;
 	private String speciality;
 	private String describe;
 	private String createTime;
 	private String startDate;
 	private String endDate;
 	private Integer dayCount;
+	private String contactName;
+	private String phone;
+	private String openId;
 	private Integer state;
 }
