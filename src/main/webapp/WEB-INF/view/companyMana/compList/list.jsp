@@ -18,15 +18,16 @@
 	height:32px;
 }
 .tab1_div .toolbar .row_div .companyName_span,
-.tab1_div .toolbar .row_div .address_span,
-.tab1_div .toolbar .row_div .industry_span,
+.tab1_div .toolbar .row_div .trade_span,
+.tab1_div .toolbar .row_div .contactName_span,
+.tab1_div .toolbar .row_div .phone_span,
 .tab1_div .toolbar .row_div .createTime_span,
 .tab1_div .toolbar .row_div .search_but{
 	margin-left: 13px;
 }
 .tab1_div .toolbar .row_div .companyName_inp,
-.tab1_div .toolbar .row_div .address_inp,
-.tab1_div .toolbar .row_div .industry_inp{
+.tab1_div .toolbar .row_div .contactName_inp,
+.tab1_div .toolbar .row_div .phone_inp{
 	width: 120px;
 	height: 25px;
 }
@@ -35,12 +36,37 @@
 <script type="text/javascript">
 var path='<%=basePath %>';
 var companyManaPath=path+'companyMana/';
+var phonePath=path+'phone/';
 $(function(){
+	initTradeCBB();
 	initCreateTimeStartDTB();
 	initCreateTimeEndDTB();
 	initSearchLB();
 	initTab1();
 });
+
+function initTradeCBB(){
+	var data=[];
+	data.push({"value":"","text":"请选择"});
+	$.post(phonePath+"initTradeCBBData",
+		function(result){
+			if(result.message=="ok"){
+				tradeList=result.tradeList;
+				for(var i=0;i<tradeList.length;i++){
+					var trade=tradeList[i];
+					data.push({"value":trade.id,"text":trade.name});
+				}
+				
+				tradeCBB=$("#trade_cbb").combobox({
+					valueField:"value",
+					textField:"text",
+					//multiple:true,
+					data:data
+				});
+			}
+		}
+	,"json");
+}
 
 function initCreateTimeStartDTB(){
 	createTimeStartDTB=$("#createTimeStart_dtb").datetimebox({
@@ -58,27 +84,15 @@ function initSearchLB(){
 	$("#search_but").linkbutton({
 		iconCls:"icon-search",
 		onClick:function(){
+			var companyName=$("#toolbar #companyName").val();
+			var tradeId=tradeCBB.combobox("getValue");
 			var contactName=$("#toolbar #contactName").val();
 			var phone=$("#toolbar #phone").val();
-			var area=$("#toolbar #area").val();
-			var companyName=$("#toolbar #companyName").val();
-			var enginName=$("#toolbar #enginName").val();
-			var tradeName=$("#toolbar #tradeName").val();
-			var otherTrade=$("#toolbar #otherTrade").val();
-			var specialityName=$("#toolbar #specialityName").val();
-			var otherSpeciality=$("#toolbar #otherSpeciality").val();
 			var createTimeStart=createTimeStartDTB.datetimebox("getValue");
 			var createTimeEnd=createTimeEndDTB.datetimebox("getValue");
-			var startDateStart=startDateStartDB.datebox("getValue");
-			var startDateEnd=startDateEndDB.datebox("getValue");
-			var endDateStart=endDateStartDB.datebox("getValue");
-			var endDateEnd=endDateEndDB.datebox("getValue");
-			var state=stateCBB.combobox("getValue");
 			
-			tab1.datagrid("load",{contactName:contactName,phone:phone,area:area,companyName:companyName,
-				enginName:enginName,tradeName:tradeName,otherTrade:otherTrade,specialityName:specialityName,
-				otherSpeciality:otherSpeciality,createTimeStart:createTimeStart,createTimeEnd:createTimeEnd,
-				startDateStart:startDateStart,startDateEnd:startDateEnd,endDateStart:endDateStart,endDateEnd:endDateEnd,state:state});
+			tab1.datagrid("load",{companyName:companyName,tradeId:tradeId,contactName:contactName,phone:phone,
+				createTimeStart:createTimeStart,createTimeEnd:createTimeEnd});
 		}
 	});
 }
@@ -92,9 +106,10 @@ function initTab1(){
 		pagination:true,
 		pageSize:10,
 		columns:[[
-			{field:"companyName",title:"公司名",width:150},
-			{field:"address",title:"地址",width:150},
-			{field:"industry",title:"行业",width:150},
+			{field:"name",title:"公司名",width:150},
+			{field:"tradeId",title:"行业",width:150},
+			{field:"contactName",title:"联系人",width:150},
+			{field:"phone",title:"联系方式",width:150},
 			{field:"createTime",title:"创建时间",width:150},
             {field:"id",title:"操作",width:150,formatter:function(value,row){
             	var str="<a href=\"detail?id="+value+"\">详情</a>&nbsp;&nbsp;";
@@ -103,8 +118,8 @@ function initTab1(){
 	    ]],
         onLoadSuccess:function(data){
 			if(data.total==0){
-				$(this).datagrid("appendRow",{companyName:"<div style=\"text-align:center;\">暂无信息<div>"});
-				$(this).datagrid("mergeCells",{index:0,field:"companyName",colspan:5});
+				$(this).datagrid("appendRow",{name:"<div style=\"text-align:center;\">暂无信息<div>"});
+				$(this).datagrid("mergeCells",{index:0,field:"name",colspan:6});
 				data.total=0;
 			}
 			
@@ -139,10 +154,12 @@ function setFitWidthInParent(parent,self){
 			<div class="row_div">
 				<span class="companyName_span">公司名：</span>
 				<input type="text" class="companyName_inp" id="companyName" placeholder="请输入公司名"/>
-				<span class="address_span">地址：</span>
-				<input type="text" class="address_inp" id="enginName" placeholder="请输入工程名"/>
-				<span class="industry_span">行业：</span>
-				<input type="text" class="industry_inp" id="tradeName" placeholder="请输入行业"/>
+				<span class="trade_span">行业：</span>
+				<input id="trade_cbb"/>
+				<span class="contactName_span">联系人：</span>
+				<input type="text" class="contactName_inp" id="contactName" placeholder="请输入联系人"/>
+				<span class="phone_span">联系方式：</span>
+				<input type="text" class="phone_inp" id="phone" placeholder="请输入联系方式"/>
 				<span class="createTime_span">创建时间：</span>
 				<input id="createTimeStart_dtb"/>-
 				<input id="createTimeEnd_dtb"/>
