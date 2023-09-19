@@ -12,7 +12,7 @@
 	position: fixed;
 }
 .tab1_div .toolbar{
-	height:32px;
+	height:64px;
 }
 .tab1_div .toolbar .row_div{
 	height:32px;
@@ -160,6 +160,8 @@ function setFitWidthInParent(parent,self){
 				<input type="text" class="contactName_inp" id="contactName" placeholder="请输入联系人"/>
 				<span class="phone_span">联系方式：</span>
 				<input type="text" class="phone_inp" id="phone" placeholder="请输入联系方式"/>
+			</div>
+			<div class="row_div">
 				<span class="createTime_span">创建时间：</span>
 				<input id="createTimeStart_dtb"/>-
 				<input id="createTimeEnd_dtb"/>

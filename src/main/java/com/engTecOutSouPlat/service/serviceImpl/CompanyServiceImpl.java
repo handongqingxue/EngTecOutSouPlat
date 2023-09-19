@@ -28,17 +28,17 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public int queryForInt(String companyName, String address, String industry, String createTimeStart,
+	public int queryForInt(String companyName, Integer tradeId, String contactName, String phone, String createTimeStart,
 			String createTimeEnd) {
 		// TODO Auto-generated method stub
-		return companyDao.queryForInt(companyName, address, industry, createTimeStart, createTimeEnd);
+		return companyDao.queryForInt(companyName, tradeId, contactName, phone, createTimeStart, createTimeEnd);
 	}
 
 	@Override
-	public List<Company> queryList(String companyName, String address, String industry, String createTimeStart,
+	public List<Company> queryList(String companyName, Integer tradeId, String contactName, String phone, String createTimeStart,
 			String createTimeEnd, int page, int rows, String sort, String order) {
 		// TODO Auto-generated method stub
-		return companyDao.queryList(companyName, address, industry, createTimeStart, createTimeEnd, 
+		return companyDao.queryList(companyName, tradeId, contactName, phone, createTimeStart, createTimeEnd, 
 				(page-1)*rows, rows, sort, order);
 	}
 

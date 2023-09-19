@@ -32,13 +32,13 @@ public class CompanyManaController {
 	
 	@RequestMapping(value="/queryList")
 	@ResponseBody
-	public Map<String, Object> queryList(String companyName,String address,String industry,String createTimeStart,String createTimeEnd,int page,int rows,String sort,String order) {
+	public Map<String, Object> queryList(String companyName,Integer tradeId,String contactName,String phone,String createTimeStart,String createTimeEnd,int page,int rows,String sort,String order) {
 		
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		
 		try {
-			int count = companyService.queryForInt(companyName,address,industry,createTimeStart,createTimeEnd);
-			List<Company> companyList=companyService.queryList(companyName,address,industry,createTimeStart,createTimeEnd, page, rows, sort, order);
+			int count = companyService.queryForInt(companyName,tradeId,contactName,phone,createTimeStart,createTimeEnd);
+			List<Company> companyList=companyService.queryList(companyName,tradeId,contactName,phone,createTimeStart,createTimeEnd, page, rows, sort, order);
 			
 			jsonMap.put("total", count);
 			jsonMap.put("rows", companyList);

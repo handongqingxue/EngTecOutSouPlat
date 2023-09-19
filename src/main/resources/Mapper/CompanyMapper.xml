@@ -66,11 +66,14 @@
 		<if test="companyName!=''&amp;companyName!=null">
 			and name like CONCAT('%',#{companyName},'%')
 		</if>
-		<if test="address!=''&amp;address!=null">
-			and address like CONCAT('%',#{address},'%')
+		<if test="tradeId!=''&amp;tradeId!=null">
+			and tradeId=#{tradeId}
 		</if>
-		<if test="industry!=''&amp;industry!=null">
-			and industry like CONCAT('%',#{industry},'%')
+		<if test="contactName!=''&amp;contactName!=null">
+			and contactName like CONCAT('%',#{contactName},'%')
+		</if>
+		<if test="phone!=''&amp;phone!=null">
+			and phone like CONCAT('%',#{phone},'%')
 		</if>
 		<if test="createTimeStart!=''&amp;createTimeStart!=null&amp;createTimeEnd!=''&amp;createTimeEnd!=null">
 			and createTime between #{createTimeStart} and #{createTimeEnd}
@@ -81,11 +84,14 @@
 		<if test="companyName!=''&amp;companyName!=null">
 			and name like CONCAT('%',#{companyName},'%')
 		</if>
-		<if test="address!=''&amp;address!=null">
-			and address like CONCAT('%',#{address},'%')
+		<if test="tradeId!=''&amp;tradeId!=null">
+			and tradeId=#{tradeId}
 		</if>
-		<if test="industry!=''&amp;industry!=null">
-			and industry like CONCAT('%',#{industry},'%')
+		<if test="contactName!=''&amp;contactName!=null">
+			and contactName like CONCAT('%',#{contactName},'%')
+		</if>
+		<if test="phone!=''&amp;phone!=null">
+			and phone like CONCAT('%',#{phone},'%')
 		</if>
 		<if test="createTimeStart!=''&amp;createTimeStart!=null&amp;createTimeEnd!=''&amp;createTimeEnd!=null">
 			and createTime between #{createTimeStart} and #{createTimeEnd}

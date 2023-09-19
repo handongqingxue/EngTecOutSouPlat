@@ -10,9 +10,9 @@ public interface CompanyService {
 
 	int edit(Company c);
 
-	int queryForInt(String companyName, String address, String industry, String createTimeStart, String createTimeEnd);
+	int queryForInt(String companyName, Integer tradeId, String contactName, String phone, String createTimeStart, String createTimeEnd);
 
-	List<Company> queryList(String companyName, String address, String industry, String createTimeStart, String createTimeEnd, 
+	List<Company> queryList(String companyName, Integer tradeId, String contactName, String phone, String createTimeStart, String createTimeEnd, 
 			int page, int rows, String sort, String order);
 
 	boolean checkIfExist(String openId);

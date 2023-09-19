@@ -6,4 +6,18 @@
 	<select id="get" resultType="com.engTecOutSouPlat.entity.User">
 		select * from user where username=#{username} and password=#{password}
 	</select>
+	<select id="queryForInt" resultType="java.lang.Integer">
+		select count(*) from user where username!='admin'
+		<if test="username!=''&amp;username!=null">
+			and username like CONCAT('%',#{username},'%')
+		</if>
+	</select>
+	<select id="queryList" resultType="com.engTecOutSouPlat.entity.User">
+		select * from user where username!='admin'
+		<if test="username!=''&amp;username!=null">
+			and username like CONCAT('%',#{username},'%')
+		</if>
+		order by createTime desc
+		limit #{rowNum},#{rows}
+	</select>
 </mapper>
