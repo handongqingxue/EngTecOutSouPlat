@@ -30,6 +30,31 @@ public class UserManaController {
 		return MODULE_NAME+"/userList/list";
 	}
 	
+	@RequestMapping(value="/addUser")
+	@ResponseBody
+	public Map<String, Object> addUser(User user) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+
+		try {
+			int count=userService.add(user);
+			if(count>0) {
+				jsonMap.put("message", "ok");
+				jsonMap.put("info", "添加用户成功");
+			}
+			else {
+				jsonMap.put("message", "no");
+				jsonMap.put("info", "添加用户失败");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return jsonMap;
+		}
+	}
+	
 	@RequestMapping(value="/queryUserList")
 	@ResponseBody
 	public Map<String, Object> queryUserList(String username,int page,int rows,String sort,String order) {

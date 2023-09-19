@@ -14,6 +14,12 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserMapper userDao;
+
+	@Override
+	public int add(User user) {
+		// TODO Auto-generated method stub
+		return userDao.add(user);
+	}
 	
 	@Override
 	public int queryForInt(String username) {

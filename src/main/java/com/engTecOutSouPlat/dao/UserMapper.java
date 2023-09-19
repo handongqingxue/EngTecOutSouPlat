@@ -8,6 +8,8 @@ import com.engTecOutSouPlat.entity.*;
 
 public interface UserMapper {
 
+	int add(User user);
+
 	//通过用户信息查询用户
 	User get(@Param("username") String username, @Param("password") String password);
 
