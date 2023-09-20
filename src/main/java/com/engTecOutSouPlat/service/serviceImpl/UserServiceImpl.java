@@ -20,6 +20,12 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return userDao.add(user);
 	}
+
+	@Override
+	public int edit(User user) {
+		// TODO Auto-generated method stub
+		return userDao.edit(user);
+	}
 	
 	@Override
 	public int queryForInt(String username) {
@@ -34,9 +40,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean checkUsernameIfExist(String username, String flag) {
+	public boolean checkUsernameIfExist(String username, String usernameOld) {
 		// TODO Auto-generated method stub
-		int count=userDao.getCountByUsername(username, flag);
+		int count=userDao.getCountByUsername(username, usernameOld);
 		return count==0?false:true;
 	}
 

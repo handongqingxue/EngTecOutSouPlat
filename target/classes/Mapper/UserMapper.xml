@@ -31,6 +31,21 @@
 				now(),
 		</trim>
 	</insert>
+	<update id="edit" parameterType="com.engTecOutSouPlat.entity.User">
+		update user set 
+		<trim suffixOverrides=",">
+			<if test="username!=null">
+				username=#{username},
+			</if>
+			<if test="password!=null">
+				password=#{password},
+			</if>
+			<if test="nickName!=null">
+				nickName=#{nickName},
+			</if>
+		</trim>
+		 where id=#{id}
+	</update>
 	<select id="get" resultType="com.engTecOutSouPlat.entity.User">
 		select * from user where username=#{username} and password=#{password}
 	</select>
@@ -49,12 +64,9 @@
 		limit #{rowNum},#{rows}
 	</select>
 	<select id="getCountByUsername" resultType="java.lang.Integer">
-		select count(*) from user where 1=1
-		<if test="flag=='add'">
-			and username=#{username}
-		</if>
-		<if test="flag=='edit'">
-			and username!=#{username}
+		select count(*) from user where username=#{username}
+		<if test="usernameOld!=''&amp;usernameOld!=null">
+			and username!=#{usernameOld}
 		</if>
 	</select>
 </mapper>

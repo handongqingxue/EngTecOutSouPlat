@@ -56,6 +56,31 @@ public class UserManaController {
 		}
 	}
 	
+	@RequestMapping(value="/editUser")
+	@ResponseBody
+	public Map<String, Object> editUser(User user) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+
+		try {
+			int count=userService.edit(user);
+			if(count>0) {
+				jsonMap.put("message", "ok");
+				jsonMap.put("info", "编辑用户成功");
+			}
+			else {
+				jsonMap.put("message", "no");
+				jsonMap.put("info", "编辑用户失败");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return jsonMap;
+		}
+	}
+	
 	@RequestMapping(value="/queryUserList")
 	@ResponseBody
 	public Map<String, Object> queryUserList(String username,int page,int rows,String sort,String order) {
@@ -83,9 +108,9 @@ public class UserManaController {
 	 */
 	@RequestMapping(value="/checkUsernameIfExist",produces="plain/text; charset=UTF-8")
 	@ResponseBody
-	public String checkCphIfExist(String username, String flag) {
+	public String checkCphIfExist(String username, String usernameOld) {
 		
-		boolean exist=userService.checkUsernameIfExist(username,flag);
+		boolean exist=userService.checkUsernameIfExist(username,usernameOld);
 		PlanResult plan=new PlanResult();
 		String json;
 		

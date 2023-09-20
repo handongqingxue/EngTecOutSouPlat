@@ -10,6 +10,8 @@ public interface UserMapper {
 
 	int add(User user);
 
+	int edit(User user);
+
 	//通过用户信息查询用户
 	User get(@Param("username") String username, @Param("password") String password);
 
@@ -17,5 +19,5 @@ public interface UserMapper {
 
 	List<User> queryList(@Param("username") String username, @Param("rowNum") int rowNum, @Param("rows") int rows, @Param("sort") String sort, @Param("order") String order);
 
-	int getCountByUsername(@Param("username") String username, @Param("flag") String flag);
+	int getCountByUsername(@Param("username") String username, @Param("usernameOld") String usernameOld);
 }

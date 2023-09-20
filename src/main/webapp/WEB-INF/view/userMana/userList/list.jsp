@@ -30,7 +30,8 @@
 	height: 25px;
 }
 
-.add_bg_div{
+.add_bg_div,
+.edit_bg_div{
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0,0,0,.45);
@@ -49,6 +50,16 @@
 	left: 0;
 	right: 0;
 }
+.edit_div{
+	width: 500px;
+	height: 250px;
+	margin: 150px auto 0;
+	background-color: #fff;
+	border-radius:5px;
+	position: absolute;
+	left: 0;
+	right: 0;
+}
 </style>
 <%@include file="../../inc/js.jsp"%>
 <script type="text/javascript" src="<%=basePath %>resource/js/MD5.js"></script>
@@ -58,11 +69,13 @@ var userManaPath=path+'userMana/';
 var dialogTop=10;
 var dialogLeft=20;
 var adddNum=0;
+var editdNum=1;
 $(function(){
 	initAddLB();
 	initSearchLB();
 	initTab1();
 	initAddDialog();//0
+	initEditDialog();//1
 	
 	initDialogPosition();//将不同窗体移动到主要内容区域
 });
@@ -70,10 +83,17 @@ $(function(){
 function initDialogPosition(){
 	var adddpw=$("body").find(".panel.window").eq(adddNum);
 	var adddws=$("body").find(".window-shadow").eq(adddNum);
+	
+	var editdpw=$("body").find(".panel.window").eq(editdNum);
+	var editdws=$("body").find(".window-shadow").eq(editdNum);
 
 	var adddDiv=$("#add_div");
 	adddDiv.append(adddpw);
 	adddDiv.append(adddws);
+	
+	var editdDiv=$("#edit_div");
+	editdDiv.append(editdpw);
+	editdDiv.append(editdws);
 }
 
 function initAddDialog(){
@@ -93,7 +113,7 @@ function initAddDialog(){
         ]
 	});
 
-	$("#add_dialog_div table").css("width",(setFitWidthInParent("#add_div","input_cph_dialog_table"))+"px");
+	$("#add_dialog_div table").css("width",(setFitWidthInParent("#add_div","add_dialog_table"))+"px");
 	$("#add_dialog_div table").css("magin","-100px");
 	$("#add_dialog_div table td").css("padding-left","40px");
 	$("#add_dialog_div table td").css("padding-right","20px");
@@ -118,6 +138,53 @@ function initAddDialog(){
 
 	$("#add_dialog_div #cancel_but").css("left","50%");
 	$("#add_dialog_div #cancel_but").css("position","absolute");
+	
+	$(".dialog-button").css("background-color","#fff");
+	$(".dialog-button .l-btn-text").css("font-size","20px");
+}
+
+function initEditDialog(){
+	$("#edit_dialog_div").dialog({
+		title:"编辑用户",
+		width:setFitWidthInParent("#edit_div","edit_dialog_div"),
+		height:200,
+		top:5,
+		left:dialogLeft,
+		buttons:[
+           {text:"确定",id:"ok_but",iconCls:"icon-ok",handler:function(){
+        	   checkEdit();
+           }},
+           {text:"取消",id:"cancel_but",iconCls:"icon-cancel",handler:function(){
+        	   openEditDialog(false);
+           }}
+        ]
+	});
+
+	$("#edit_dialog_div table").css("width",(setFitWidthInParent("#edit_div","edit_dialog_table"))+"px");
+	$("#edit_dialog_div table").css("magin","-100px");
+	$("#edit_dialog_div table td").css("padding-left","40px");
+	$("#edit_dialog_div table td").css("padding-right","20px");
+	$("#edit_dialog_div table td").css("font-size","15px");
+	$("#edit_dialog_div table .td1").css("width","30%");
+	$("#edit_dialog_div table .td2").css("width","60%");
+	$("#edit_dialog_div table tr").css("height","45px");
+
+	$(".panel.window").eq(editdNum).css("margin-top","20px");
+	$(".panel.window .panel-title").eq(editdNum).css("color","#000");
+	$(".panel.window .panel-title").eq(editdNum).css("font-size","15px");
+	$(".panel.window .panel-title").eq(editdNum).css("padding-left","10px");
+	
+	$(".panel-header, .panel-body").css("border-color","#ddd");
+	
+	//以下的是表格下面的面板
+	$(".window-shadow").eq(editdNum).css("margin-top","20px");
+	$(".window,.window .window-body").eq(editdNum).css("border-color","#ddd");
+
+	$("#edit_dialog_div #ok_but").css("left","30%");
+	$("#edit_dialog_div #ok_but").css("position","absolute");
+
+	$("#edit_dialog_div #cancel_but").css("left","50%");
+	$("#edit_dialog_div #cancel_but").css("position","absolute");
 	
 	$(".dialog-button").css("background-color","#fff");
 	$(".dialog-button .l-btn-text").css("font-size","20px");
@@ -156,7 +223,8 @@ function initTab1(){
 			{field:"nickName",title:"昵称",width:150},
 			{field:"createTime",title:"创建时间",width:150},
             {field:"id",title:"操作",width:150,formatter:function(value,row){
-            	var str="<a href=\"detail?id="+value+"\">编辑</a>&nbsp;&nbsp;";
+            	var rowJson = JSON.stringify(row).replace(/"/g, '&quot;');
+            	var str="<a onclick=\"openEditDialog(true,"+rowJson+")\">编辑</a>&nbsp;&nbsp;";
             	return str;
             }}
 	    ]],
@@ -184,6 +252,23 @@ function openAddDialog(flag){
 	}
 }
 
+function openEditDialog(flag,row){
+	if(flag){
+		$("#edit_bg_div").css("display","block");
+		$("#edit_div #id").val(row.id);
+		$("#edit_div #usernameOld").val(row.username);
+		$("#edit_div #username").val(row.username);
+		$("#edit_div #nickName").val(row.nickName);
+	}
+	else{
+		$("#edit_bg_div").css("display","none");
+		$("#edit_div #id").val("");
+		$("#edit_div #usernameOld").val("");
+		$("#edit_div #username").val("");
+		$("#edit_div #nickName").val("");
+	}
+}
+
 function checkAdd(){
 	if(checkAddUsername()){
 		if(checkAddPassword()){
@@ -192,6 +277,14 @@ function checkAdd(){
 					addUser();
 				}
 			}
+		}
+	}
+}
+
+function checkEdit(){
+	if(checkEditUsername()){
+		if(checkEditNickName()){
+			editUser();
 		}
 	}
 }
@@ -212,6 +305,29 @@ function addUser(){
 			if(data.message=="ok"){
 				alert(data.info);
 				openAddDialog(false);
+				tab1.datagrid("load");
+			}
+			else{
+				alert(data.info);
+			}
+		}
+	});
+}
+
+function editUser(){
+	var formData = new FormData($("#form2")[0]);
+	$.ajax({
+		type:"post",
+		url:userManaPath+"editUser",
+		dataType: "json",
+		data:formData,
+		cache: false,
+		processData: false,
+		contentType: false,
+		success: function (data){
+			if(data.message=="ok"){
+				alert(data.info);
+				openEditDialog(false);
 				tab1.datagrid("load");
 			}
 			else{
@@ -253,6 +369,47 @@ function checkAddUsername(){
 				else{
 					$("#add_div #username").css("color","#E15748");
 			    	$("#add_div #username").val(data.msg);
+			    	flag=false;
+				}
+			}
+		,"json");
+	}
+	return flag;
+}
+
+function focusEditUsername(){
+	var username = $("#edit_div #username").val();
+	if(username=="用户名不能为空"||username=="用户名已存在"){
+		$("#edit_div #username").val("");
+		$("#edit_div #username").css("color", "#555555");
+	}
+}
+
+//验证用户名
+function checkEditUsername(){
+	var flag=false;
+	var username = $("#edit_div #username").val();
+	if(username==null||username==""||username=="用户名不能为空"){
+		$("#edit_div #username").css("color","#E15748");
+    	$("#edit_div #username").val("用户名不能为空");
+    	flag=false;
+	}
+	else if(username=="用户名已存在"){
+		$("#edit_div #username").css("color","#E15748");
+    	$("#edit_div #username").val("用户名已存在");
+    	flag=false;
+	}
+	else{
+		$.ajaxSetup({async:false});
+		var usernameOld = $("#edit_div #usernameOld").val();
+		$.post(userManaPath+"checkUsernameIfExist",
+			{username:username,usernameOld:usernameOld},
+			function(data){
+				if(data.status==1)
+			    	flag=true;
+				else{
+					$("#edit_div #username").css("color","#E15748");
+			    	$("#edit_div #username").val(data.msg);
 			    	flag=false;
 				}
 			}
@@ -310,6 +467,26 @@ function checkAddNickName(){
 		return true;
 }
 
+function focusEditNickName(){
+	var nickName = $("#edit_div #nickName").val();
+	if(nickName=="昵称不能为空"){
+		$("#edit_div #nickName").val("");
+		$("#edit_div #nickName").css("color", "#555555");
+	}
+}
+
+//验证昵称
+function checkEditNickName(){
+	var nickName = $("#edit_div #nickName").val();
+	if(nickName==null||nickName==""||nickName=="昵称不能为空"){
+		$("#edit_div #nickName").css("color","#E15748");
+    	$("#edit_div #nickName").val("昵称不能为空");
+    	return false;
+	}
+	else
+		return true;
+}
+
 function setFitWidthInParent(parent,self){
 	var space=0;
 	switch (self) {
@@ -317,9 +494,11 @@ function setFitWidthInParent(parent,self){
 		space=250;
 		break;
 	case "add_dialog_div":
+	case "edit_dialog_div":
 		space=50;
 		break;
-	case "input_cph_dialog_table":
+	case "add_dialog_table":
+	case "edit_dialog_table":
 		space=68;
 		break;
 	case "panel_window":
@@ -351,7 +530,7 @@ function setFitWidthInParent(parent,self){
 		<div class="add_div" id="add_div">
 			<div class="add_dialog_div" id="add_dialog_div">
 			<form id="form1" name="form1" method="post" enctype="multipart/form-data">
-				<table>
+				<table id="add_dialog_table">
 				  <tr>
 					<td class="td1" align="right">
 						用户名
@@ -382,6 +561,35 @@ function setFitWidthInParent(parent,self){
 					</td>
 					<td class="td2">
 						<input type="text" class="nickName_inp" id="nickName" name="nickName" placeholder="请输入昵称" onfocus="focusAddNickName()" onblur="checkAddNickName()"/>
+					</td>
+				  </tr>
+				</table>
+			</form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="edit_bg_div" id="edit_bg_div">
+		<div class="edit_div" id="edit_div">
+			<div class="edit_dialog_div" id="edit_dialog_div">
+			<form id="form2" name="form2" method="post" enctype="multipart/form-data">
+				<input type="hidden" id="id" name="id"/>
+				<table>
+				  <tr>
+					<td class="td1" align="right">
+						用户名
+					</td>
+					<td class="td2">
+						<input type="hidden" id="usernameOld"/>
+						<input type="text" class="username_inp" id="username" name="username" placeholder="请输入用户名" onfocus="focusEditUsername()" onblur="checkEditUsername()"/>
+					</td>
+				  </tr>
+				  <tr>
+					<td class="td1" align="right">
+						昵称
+					</td>
+					<td class="td2">
+						<input type="text" class="nickName_inp" id="nickName" name="nickName" placeholder="请输入昵称" onfocus="focusEditNickName()" onblur="checkEditNickName()"/>
 					</td>
 				  </tr>
 				</table>
