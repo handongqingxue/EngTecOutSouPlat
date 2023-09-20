@@ -20,4 +20,6 @@ public interface UserMapper {
 	List<User> queryList(@Param("username") String username, @Param("rowNum") int rowNum, @Param("rows") int rows, @Param("sort") String sort, @Param("order") String order);
 
 	int getCountByUsername(@Param("username") String username, @Param("usernameOld") String usernameOld);
+
+	int updatePwdById(@Param("password") String password, @Param("id") String id);
 }

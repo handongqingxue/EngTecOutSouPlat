@@ -23,15 +23,18 @@
 }
 .tab1_div .toolbar .row_div .username_inp,
 .add_div .username_inp,
+.edit_div .username_inp,
 .add_div .password_inp,
 .add_div .password2_inp,
-.add_div .nickName_inp{
+.add_div .nickName_inp,
+.edit_div .nickName_inp{
 	width: 120px;
 	height: 25px;
 }
 
 .add_bg_div,
-.edit_bg_div{
+.edit_bg_div,
+.upd_pwd_bg_div{
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0,0,0,.45);
@@ -50,7 +53,8 @@
 	left: 0;
 	right: 0;
 }
-.edit_div{
+.edit_div,
+.upd_pwd_div{
 	width: 500px;
 	height: 250px;
 	margin: 150px auto 0;
@@ -70,12 +74,14 @@ var dialogTop=10;
 var dialogLeft=20;
 var adddNum=0;
 var editdNum=1;
+var updNum=2;
 $(function(){
 	initAddLB();
 	initSearchLB();
 	initTab1();
 	initAddDialog();//0
 	initEditDialog();//1
+	initUpdPwdDialog();//2
 	
 	initDialogPosition();//将不同窗体移动到主要内容区域
 });
@@ -86,6 +92,9 @@ function initDialogPosition(){
 	
 	var editdpw=$("body").find(".panel.window").eq(editdNum);
 	var editdws=$("body").find(".window-shadow").eq(editdNum);
+	
+	var updpw=$("body").find(".panel.window").eq(updNum);
+	var updws=$("body").find(".window-shadow").eq(updNum);
 
 	var adddDiv=$("#add_div");
 	adddDiv.append(adddpw);
@@ -94,6 +103,10 @@ function initDialogPosition(){
 	var editdDiv=$("#edit_div");
 	editdDiv.append(editdpw);
 	editdDiv.append(editdws);
+	
+	var updDiv=$("#upd_pwd_div");
+	updDiv.append(updpw);
+	updDiv.append(updws);
 }
 
 function initAddDialog(){
@@ -190,6 +203,53 @@ function initEditDialog(){
 	$(".dialog-button .l-btn-text").css("font-size","20px");
 }
 
+function initUpdPwdDialog(){
+	$("#upd_pwd_dialog_div").dialog({
+		title:"修改密码",
+		width:setFitWidthInParent("#upd_pwd_div","upd_pwd_dialog_div"),
+		height:200,
+		top:5,
+		left:dialogLeft,
+		buttons:[
+           {text:"确定",id:"ok_but",iconCls:"icon-ok",handler:function(){
+        	   checkUpdPwd();
+           }},
+           {text:"取消",id:"cancel_but",iconCls:"icon-cancel",handler:function(){
+        	   openUpdPwdDialog(false);
+           }}
+        ]
+	});
+
+	$("#upd_pwd_dialog_div table").css("width",(setFitWidthInParent("#upd_pwd_div","upd_pwd_dialog_table"))+"px");
+	$("#upd_pwd_dialog_div table").css("magin","-100px");
+	$("#upd_pwd_dialog_div table td").css("padding-left","40px");
+	$("#upd_pwd_dialog_div table td").css("padding-right","20px");
+	$("#upd_pwd_dialog_div table td").css("font-size","15px");
+	$("#upd_pwd_dialog_div table .td1").css("width","30%");
+	$("#upd_pwd_dialog_div table .td2").css("width","60%");
+	$("#upd_pwd_dialog_div table tr").css("height","45px");
+
+	$(".panel.window").eq(updNum).css("margin-top","20px");
+	$(".panel.window .panel-title").eq(updNum).css("color","#000");
+	$(".panel.window .panel-title").eq(updNum).css("font-size","15px");
+	$(".panel.window .panel-title").eq(updNum).css("padding-left","10px");
+	
+	$(".panel-header, .panel-body").css("border-color","#ddd");
+	
+	//以下的是表格下面的面板
+	$(".window-shadow").eq(updNum).css("margin-top","20px");
+	$(".window,.window .window-body").eq(updNum).css("border-color","#ddd");
+
+	$("#upd_pwd_dialog_div #ok_but").css("left","30%");
+	$("#upd_pwd_dialog_div #ok_but").css("position","absolute");
+
+	$("#upd_pwd_dialog_div #cancel_but").css("left","50%");
+	$("#upd_pwd_dialog_div #cancel_but").css("position","absolute");
+	
+	$(".dialog-button").css("background-color","#fff");
+	$(".dialog-button .l-btn-text").css("font-size","20px");
+}
+
 function initAddLB(){
 	$("#add_but").linkbutton({
 		iconCls:"icon-add",
@@ -225,6 +285,7 @@ function initTab1(){
             {field:"id",title:"操作",width:150,formatter:function(value,row){
             	var rowJson = JSON.stringify(row).replace(/"/g, '&quot;');
             	var str="<a onclick=\"openEditDialog(true,"+rowJson+")\">编辑</a>&nbsp;&nbsp;";
+            	str+="<a onclick=\"openUpdPwdDialog(true,"+rowJson+")\">修改密码</a>";
             	return str;
             }}
 	    ]],
@@ -269,6 +330,17 @@ function openEditDialog(flag,row){
 	}
 }
 
+function openUpdPwdDialog(flag,row){
+	if(flag){
+		$("#upd_pwd_bg_div").css("display","block");
+		$("#upd_pwd_div #id").val(row.id);
+	}
+	else{
+		$("#upd_pwd_bg_div").css("display","none");
+		$("#upd_pwd_div #id").val("");
+	}
+}
+
 function checkAdd(){
 	if(checkAddUsername()){
 		if(checkAddPassword()){
@@ -285,6 +357,14 @@ function checkEdit(){
 	if(checkEditUsername()){
 		if(checkEditNickName()){
 			editUser();
+		}
+	}
+}
+
+function checkUpdPwd(){
+	if(checkUpdPassword()){
+		if(checkUpdPassword2()){
+			updatePwd();
 		}
 	}
 }
@@ -335,6 +415,24 @@ function editUser(){
 			}
 		}
 	});
+}
+
+function updatePwd(){
+	var id = $("#upd_pwd_div #id").val();
+	var password = MD5($("#upd_pwd_div #password").val()).toUpperCase();
+	$.post(userManaPath+"updatePwdById",
+		{id:id,password:password},
+		function(data){
+			if(data.message=="ok"){
+				alert(data.info);
+				openUpdPwdDialog(false);
+				tab1.datagrid("load");
+			}
+			else{
+				alert(data.info);
+			}
+		}
+	,"json");
 }
 
 function focusAddUsername(){
@@ -447,6 +545,35 @@ function checkAddPassword2(){
 	return flag;
 }
 
+//验证新密码
+function checkUpdPassword(){
+	var password = $("#upd_pwd_div #password").val();
+	if(password==null||password==""){
+	  	alert("请输入新密码");
+	  	return false;
+	}
+	else
+		return true;
+}
+
+//验证确认新密码
+function checkUpdPassword2(){
+	var flag=false;
+	var password = $("#upd_pwd_div #password").val();
+	var password2 = $("#upd_pwd_div #password2").val();
+	if(password2==null||password2==""){
+	  	alert("请输入确认新密码");
+		flag=false;
+	}
+	else if(password!=password2){
+	  	alert("两次密码不一致");
+		flag=false;
+	}
+	else
+		flag=true;
+	return flag;
+}
+
 function focusAddNickName(){
 	var nickName = $("#add_div #nickName").val();
 	if(nickName=="昵称不能为空"){
@@ -495,10 +622,12 @@ function setFitWidthInParent(parent,self){
 		break;
 	case "add_dialog_div":
 	case "edit_dialog_div":
+	case "upd_pwd_dialog_div":
 		space=50;
 		break;
 	case "add_dialog_table":
 	case "edit_dialog_table":
+	case "upd_pwd_dialog_table":
 		space=68;
 		break;
 	case "panel_window":
@@ -590,6 +719,34 @@ function setFitWidthInParent(parent,self){
 					</td>
 					<td class="td2">
 						<input type="text" class="nickName_inp" id="nickName" name="nickName" placeholder="请输入昵称" onfocus="focusEditNickName()" onblur="checkEditNickName()"/>
+					</td>
+				  </tr>
+				</table>
+			</form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="upd_pwd_bg_div" id="upd_pwd_bg_div">
+		<div class="upd_pwd_div" id="upd_pwd_div">
+			<div class="upd_pwd_dialog_div" id="upd_pwd_dialog_div">
+			<form id="form2" name="form2" method="post" enctype="multipart/form-data">
+				<input type="hidden" id="id" name="id"/>
+				<table>
+				  <tr>
+					<td class="td1" align="right">
+						新密码
+					</td>
+					<td class="td2">
+						<input type="password" class="password_inp" id="password" placeholder="请输入密码"/>
+					</td>
+				  </tr>
+				  <tr>
+					<td class="td1" align="right">
+						确认新密码
+					</td>
+					<td class="td2">
+						<input type="password" class="password2_inp" id="password2" placeholder="请再次输入新密码"/>
 					</td>
 				  </tr>
 				</table>

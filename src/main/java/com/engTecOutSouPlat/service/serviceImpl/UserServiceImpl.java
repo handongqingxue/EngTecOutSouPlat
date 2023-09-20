@@ -46,4 +46,10 @@ public class UserServiceImpl implements UserService {
 		return count==0?false:true;
 	}
 
+	@Override
+	public int updatePwdById(String password, String id) {
+		// TODO Auto-generated method stub
+		return userDao.updatePwdById(password,id);
+	}
+
 }

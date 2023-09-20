@@ -16,4 +16,6 @@ public interface UserService {
 
 	boolean checkUsernameIfExist(String username, String usernameOld);
 
+	int updatePwdById(String password, String id);
+
 }

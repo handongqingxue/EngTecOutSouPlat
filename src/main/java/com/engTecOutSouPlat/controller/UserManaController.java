@@ -126,4 +126,29 @@ public class UserManaController {
 		
 		return json;
 	}
+	
+	@RequestMapping(value="/updatePwdById")
+	@ResponseBody
+	public Map<String, Object> updatePwdById(String password, String id) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+
+		try {
+			int count=userService.updatePwdById(password,id);
+			if(count>0) {
+				jsonMap.put("message", "ok");
+				jsonMap.put("info", "修改密码成功");
+			}
+			else {
+				jsonMap.put("message", "no");
+				jsonMap.put("info", "修改密码失败");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return jsonMap;
+		}
+	}
 }

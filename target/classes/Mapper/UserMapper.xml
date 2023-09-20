@@ -69,4 +69,7 @@
 			and username!=#{usernameOld}
 		</if>
 	</select>
+	<update id="updatePwdById">
+		update user set password=#{password} where id=#{id}
+	</update>
 </mapper>
