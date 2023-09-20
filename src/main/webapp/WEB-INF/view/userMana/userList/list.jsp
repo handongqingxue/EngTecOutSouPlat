@@ -24,6 +24,7 @@
 .tab1_div .toolbar .row_div .username_inp,
 .add_div .username_inp,
 .add_div .password_inp,
+.add_div .password2_inp,
 .add_div .nickName_inp{
 	width: 120px;
 	height: 25px;
@@ -50,6 +51,7 @@
 }
 </style>
 <%@include file="../../inc/js.jsp"%>
+<script type="text/javascript" src="<%=basePath %>resource/js/MD5.js"></script>
 <script type="text/javascript">
 var path='<%=basePath %>';
 var userManaPath=path+'userMana/';
@@ -83,7 +85,7 @@ function initAddDialog(){
 		left:dialogLeft,
 		buttons:[
            {text:"确定",id:"ok_but",iconCls:"icon-ok",handler:function(){
-        	   checkCphToClient();
+        	   checkAdd();
            }},
            {text:"取消",id:"cancel_but",iconCls:"icon-cancel",handler:function(){
         	   openAddDialog(false);
@@ -134,25 +136,9 @@ function initSearchLB(){
 	$("#search_but").linkbutton({
 		iconCls:"icon-search",
 		onClick:function(){
-			var contactName=$("#toolbar #contactName").val();
-			var phone=$("#toolbar #phone").val();
-			var area=$("#toolbar #area").val();
-			var companyName=$("#toolbar #companyName").val();
-			var enginName=$("#toolbar #enginName").val();
-			var tradeName=$("#toolbar #tradeName").val();
-			var otherTrade=$("#toolbar #otherTrade").val();
-			var speciality=$("#toolbar #speciality").val();
-			var createTimeStart=createTimeStartDTB.datetimebox("getValue");
-			var createTimeEnd=createTimeEndDTB.datetimebox("getValue");
-			var startDateStart=startDateStartDB.datebox("getValue");
-			var startDateEnd=startDateEndDB.datebox("getValue");
-			var endDateStart=endDateStartDB.datebox("getValue");
-			var endDateEnd=endDateEndDB.datebox("getValue");
-			var state=stateCBB.combobox("getValue");
+			var username=$("#toolbar #username").val();
 			
-			tab1.datagrid("load",{contactName:contactName,phone:phone,area:area,companyName:companyName,enginName:enginName,
-				tradeName:tradeName,otherTrade:otherTrade,speciality:speciality,createTimeStart:createTimeStart,createTimeEnd:createTimeEnd,
-				startDateStart:startDateStart,startDateEnd:startDateEnd,endDateStart:endDateStart,endDateEnd:endDateEnd,state:state});
+			tab1.datagrid("load",{username:username});
 		}
 	});
 }
@@ -198,9 +184,46 @@ function openAddDialog(flag){
 	}
 }
 
+function checkAdd(){
+	if(checkAddUsername()){
+		if(checkAddPassword()){
+			if(checkAddPassword2()){
+				if(checkAddNickName()){
+					addUser();
+				}
+			}
+		}
+	}
+}
+
+function addUser(){
+	var password = $("#add_div #password").val();
+	$("#add_div #password").val(MD5(password).toUpperCase());
+	var formData = new FormData($("#form1")[0]);
+	$.ajax({
+		type:"post",
+		url:userManaPath+"addUser",
+		dataType: "json",
+		data:formData,
+		cache: false,
+		processData: false,
+		contentType: false,
+		success: function (data){
+			if(data.message=="ok"){
+				alert(data.info);
+				openAddDialog(false);
+				tab1.datagrid("load");
+			}
+			else{
+				alert(data.info);
+			}
+		}
+	});
+}
+
 function focusAddUsername(){
 	var username = $("#add_div #username").val();
-	if(username=="用户名不能为空"){
+	if(username=="用户名不能为空"||username=="用户名已存在"){
 		$("#add_div #username").val("");
 		$("#add_div #username").css("color", "#555555");
 	}
@@ -208,10 +231,79 @@ function focusAddUsername(){
 
 //验证用户名
 function checkAddUsername(){
+	var flag=false;
 	var username = $("#add_div #username").val();
 	if(username==null||username==""||username=="用户名不能为空"){
-		$("#add_div #deveTool").css("color","#E15748");
-    	$("#add_div #deveTool").val("用户名不能为空");
+		$("#add_div #username").css("color","#E15748");
+    	$("#add_div #username").val("用户名不能为空");
+    	flag=false;
+	}
+	else if(username=="用户名已存在"){
+		$("#add_div #username").css("color","#E15748");
+    	$("#add_div #username").val("用户名已存在");
+    	flag=false;
+	}
+	else{
+		$.ajaxSetup({async:false});
+		$.post(userManaPath+"checkUsernameIfExist",
+			{username:username,flag:"add"},
+			function(data){
+				if(data.status==1)
+			    	flag=true;
+				else{
+					$("#add_div #username").css("color","#E15748");
+			    	$("#add_div #username").val(data.msg);
+			    	flag=false;
+				}
+			}
+		,"json");
+	}
+	return flag;
+}
+
+//验证密码
+function checkAddPassword(){
+	var password = $("#add_div #password").val();
+	if(password==null||password==""){
+	  	alert("请输入密码");
+	  	return false;
+	}
+	else
+		return true;
+}
+
+//验证确认密码
+function checkAddPassword2(){
+	var flag=false;
+	var password = $("#add_div #password").val();
+	var password2 = $("#add_div #password2").val();
+	if(password2==null||password2==""){
+	  	alert("请输入确认密码");
+		flag=false;
+	}
+	else if(password!=password2){
+	  	alert("两次密码不一致");
+		flag=false;
+	}
+	else
+		flag=true;
+	return flag;
+}
+
+function focusAddNickName(){
+	var nickName = $("#add_div #nickName").val();
+	if(nickName=="昵称不能为空"){
+		$("#add_div #nickName").val("");
+		$("#add_div #nickName").css("color", "#555555");
+	}
+}
+
+//验证昵称
+function checkAddNickName(){
+	var nickName = $("#add_div #nickName").val();
+	if(nickName==null||nickName==""||nickName=="昵称不能为空"){
+		$("#add_div #nickName").css("color","#E15748");
+    	$("#add_div #nickName").val("昵称不能为空");
     	return false;
 	}
 	else
@@ -258,13 +350,14 @@ function setFitWidthInParent(parent,self){
 	<div class="add_bg_div" id="add_bg_div">
 		<div class="add_div" id="add_div">
 			<div class="add_dialog_div" id="add_dialog_div">
+			<form id="form1" name="form1" method="post" enctype="multipart/form-data">
 				<table>
 				  <tr>
 					<td class="td1" align="right">
 						用户名
 					</td>
 					<td class="td2">
-						<input type="text" class="username_inp" id="username" placeholder="请输入用户名" onfocus="focusAddUsername()" onblur="checkAddUsername()"/>
+						<input type="text" class="username_inp" id="username" name="username" placeholder="请输入用户名" onfocus="focusAddUsername()" onblur="checkAddUsername()"/>
 					</td>
 				  </tr>
 				  <tr>
@@ -272,7 +365,7 @@ function setFitWidthInParent(parent,self){
 						密码
 					</td>
 					<td class="td2">
-						<input type="password" class="password_inp" id="password" placeholder="请输入密码"/>
+						<input type="password" class="password_inp" id="password" name="password" placeholder="请输入密码"/>
 					</td>
 				  </tr>
 				  <tr>
@@ -280,7 +373,7 @@ function setFitWidthInParent(parent,self){
 						确认密码
 					</td>
 					<td class="td2">
-						<input type="password" class="password_inp" id="password" placeholder="请再次输入密码"/>
+						<input type="password" class="password2_inp" id="password2" placeholder="请再次输入密码"/>
 					</td>
 				  </tr>
 				  <tr>
@@ -288,10 +381,11 @@ function setFitWidthInParent(parent,self){
 						昵称
 					</td>
 					<td class="td2">
-						<input type="text" class="nickName_inp" id="nickName" placeholder="请输入昵称"/>
+						<input type="text" class="nickName_inp" id="nickName" name="nickName" placeholder="请输入昵称" onfocus="focusAddNickName()" onblur="checkAddNickName()"/>
 					</td>
 				  </tr>
 				</table>
+			</form>
 			</div>
 		</div>
 	</div>

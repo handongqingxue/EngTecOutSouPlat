@@ -16,4 +16,6 @@ public interface UserMapper {
 	int queryForInt(@Param("username") String username);
 
 	List<User> queryList(@Param("username") String username, @Param("rowNum") int rowNum, @Param("rows") int rows, @Param("sort") String sort, @Param("order") String order);
+
+	int getCountByUsername(@Param("username") String username, @Param("flag") String flag);
 }

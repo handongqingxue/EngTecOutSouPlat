@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.engTecOutSouPlat.entity.*;
 import com.engTecOutSouPlat.service.*;
+import com.engTecOutSouPlat.util.*;
 
 @Controller
 @RequestMapping("/userMana")
@@ -73,5 +74,31 @@ public class UserManaController {
 		}
 		
 		return jsonMap;
+	}
+
+	/**
+	 * 验证用户名是否存在
+	 * @param cph
+	 * @return
+	 */
+	@RequestMapping(value="/checkUsernameIfExist",produces="plain/text; charset=UTF-8")
+	@ResponseBody
+	public String checkCphIfExist(String username, String flag) {
+		
+		boolean exist=userService.checkUsernameIfExist(username,flag);
+		PlanResult plan=new PlanResult();
+		String json;
+		
+		if(exist) {
+			plan.setStatus(0);
+			plan.setMsg("用户名已存在");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		else {
+			plan.setStatus(1);
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		
+		return json;
 	}
 }

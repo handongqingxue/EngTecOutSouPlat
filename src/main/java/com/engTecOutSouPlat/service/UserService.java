@@ -12,4 +12,6 @@ public interface UserService {
 
 	List<User> queryList(String username, int page, int rows, String sort, String order);
 
+	boolean checkUsernameIfExist(String username, String flag);
+
 }

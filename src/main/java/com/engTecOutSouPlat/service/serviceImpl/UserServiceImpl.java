@@ -33,4 +33,11 @@ public class UserServiceImpl implements UserService {
 		return userDao.queryList(username, (page-1)*rows, rows, sort, order);
 	}
 
+	@Override
+	public boolean checkUsernameIfExist(String username, String flag) {
+		// TODO Auto-generated method stub
+		int count=userDao.getCountByUsername(username, flag);
+		return count==0?false:true;
+	}
+
 }
