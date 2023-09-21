@@ -11,6 +11,27 @@ import com.engTecOutSouPlat.entity.*;
 import com.engTecOutSouPlat.service.*;
 import com.engTecOutSouPlat.util.*;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import org.json.JSONObject;
+
 @Controller
 @RequestMapping("/phone")
 public class PhoneController {
@@ -23,6 +44,7 @@ public class PhoneController {
 	private ProOutSouService proOutSouService;
 	@Autowired
 	private CompanyService companyService;
+	public static final String SERVICE_URL="https://api.weixin.qq.com/";
 	
 	@RequestMapping(value="/addOrEditWXUser")
 	@ResponseBody
@@ -363,5 +385,92 @@ public class PhoneController {
 		}
 		
 		return jsonMap;
+	}
+
+	@RequestMapping(value="/jscode2session")
+	@ResponseBody
+	public Map<String, Object> jscode2session(String jsCode, String grantType) {
+		
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		try {
+			Map parames = new HashMap<String, String>();
+	        parames.put("appid", Constant.APPID);  
+	        parames.put("secret", Constant.SECRET);  
+	        parames.put("js_code", jsCode);
+	        parames.put("grant_type", grantType);  
+	        
+	        JSONObject resultJO = doHttp("sns/jscode2session",parames);
+	        String openId = resultJO.getString("openid");
+	        String sessionKey = resultJO.getString("session_key");
+	        
+	        jsonMap.put("openId", openId);
+	        jsonMap.put("sessionKey", sessionKey);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			return jsonMap;
+		}
+	}
+
+	@RequestMapping(value="/coverToPfx")
+	@ResponseBody
+	public Map<String, Object> coverToPfx() {
+
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		
+		PFXUtil.coverToPfx();
+		
+		return jsonMap;
+	}
+
+	//https://www.cnblogs.com/aeolian/p/7746158.html
+	//https://www.cnblogs.com/bobc/p/8809761.html
+	public JSONObject doHttp(String method, Map<String, Object> paramMap) throws IOException {
+		// 构建请求参数  
+        StringBuffer paramsSB = new StringBuffer();
+		if (paramMap != null) {  
+            for (Entry<String, Object> e : paramMap.entrySet()) {
+            	paramsSB.append(e.getKey());  
+            	paramsSB.append("=");  
+            	paramsSB.append(e.getValue());  
+            	paramsSB.append("&");  
+            }  
+            paramsSB.substring(0, paramsSB.length() - 1);  
+        }  
+		
+		StringBuffer sbf = new StringBuffer(); 
+		String strRead = null; 
+		URL url = new URL(SERVICE_URL+method);
+		HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+		connection.setRequestMethod("POST");//请求post方式
+		connection.setDoInput(true); 
+		connection.setDoOutput(true); 
+		//header内的的参数在这里set    
+		//connection.setRequestProperty("key", "value");
+		connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+		connection.connect(); 
+		
+		OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(),"UTF-8"); 
+		//OutputStream writer = connection.getOutputStream(); 
+		String paramsStr = paramsSB.toString();
+		//System.out.println("paramsStr==="+paramsStr);
+		writer.write(paramsStr);
+		writer.flush();
+		InputStream is = connection.getInputStream(); 
+		BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+		while ((strRead = reader.readLine()) != null) {
+			sbf.append(strRead); 
+			sbf.append("\r\n"); 
+		}
+		reader.close();
+		
+		connection.disconnect();
+		String result = sbf.toString();
+		System.out.println("result==="+result);
+		JSONObject resultJO = new JSONObject(result);
+		return resultJO;
 	}
 }
