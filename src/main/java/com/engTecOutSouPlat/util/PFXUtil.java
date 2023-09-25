@@ -7,9 +7,6 @@ import java.security.KeyStore;
 import java.security.cert.Certificate;
 import java.util.Enumeration;
 
-//https://codeleading.com/article/12883687593/
-//https://www.cnblogs.com/niway/p/17656048.html
-//https://www.freesion.com/article/1566758914/
 public class PFXUtil {
 	
     public static final String PKCS12 = "PKCS12";

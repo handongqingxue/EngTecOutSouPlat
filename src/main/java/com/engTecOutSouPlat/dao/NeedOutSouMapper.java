@@ -10,6 +10,8 @@ public interface NeedOutSouMapper {
 
 	int add(NeedOutSou nos);
 
+	int deleteByIds(@Param("idList") List<String> idList);
+
 	int edit(NeedOutSou nos);
 
 	int queryForInt(@Param("contactName") String contactName, @Param("phone") String phone, @Param("area") String area, @Param("companyName") String companyName, @Param("enginName") String enginName,

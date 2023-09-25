@@ -1,5 +1,6 @@
 package com.engTecOutSouPlat.service.serviceImpl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,15 @@ public class NeedOutSouServiceImpl implements NeedOutSouService {
 	public int add(NeedOutSou nos) {
 		// TODO Auto-generated method stub
 		return needOutSouDao.add(nos);
+	}
+
+	@Override
+	public int deleteByIds(String ids) {
+		// TODO Auto-generated method stub
+		int count=0;
+		List<String> idList = Arrays.asList(ids.split(","));
+		count=needOutSouDao.deleteByIds(idList);
+		return count;
 	}
 
 	@Override

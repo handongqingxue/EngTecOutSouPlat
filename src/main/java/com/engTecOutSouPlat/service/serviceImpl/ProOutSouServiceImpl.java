@@ -1,5 +1,6 @@
 package com.engTecOutSouPlat.service.serviceImpl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,15 @@ public class ProOutSouServiceImpl implements ProOutSouService {
 	public int add(ProOutSou pos) {
 		// TODO Auto-generated method stub
 		return proOutSouDao.add(pos);
+	}
+
+	@Override
+	public int deleteByIds(String ids) {
+		// TODO Auto-generated method stub
+		int count=0;
+		List<String> idList = Arrays.asList(ids.split(","));
+		count=proOutSouDao.deleteByIds(idList);
+		return count;
 	}
 
 	@Override

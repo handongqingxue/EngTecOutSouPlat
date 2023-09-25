@@ -9,6 +9,8 @@ import com.engTecOutSouPlat.entity.*;
 public interface ProOutSouMapper {
 
 	int add(ProOutSou pos);
+
+	int deleteByIds(@Param("idList") List<String> idList);
 	
 	int queryForInt(@Param("contactName") String contactName, @Param("phone") String phone, @Param("area") String area, @Param("companyName") String companyName, @Param("enginName") String enginName,
 			@Param("tradeName") String tradeName, @Param("otherTrade") String otherTrade, @Param("specialityName") String specialityName, @Param("otherSpeciality") String otherSpeciality, @Param("createTimeStart") String createTimeStart,

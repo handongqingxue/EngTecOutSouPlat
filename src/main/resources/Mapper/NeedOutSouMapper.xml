@@ -93,6 +93,12 @@
 				1
 		</trim>
 	</insert>
+	<delete id="deleteByIds">
+		delete from need_out_sou where 1=1
+		<foreach collection="idList" item="id" open=" and cast(id as char) in (" separator="," close=")">
+		#{id}
+		</foreach>
+	</delete>
 	<update id="edit" parameterType="com.engTecOutSouPlat.entity.NeedOutSou">
 		update need_out_sou set 
 		<trim suffixOverrides=",">

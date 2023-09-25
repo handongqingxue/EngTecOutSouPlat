@@ -8,6 +8,8 @@ public interface ProOutSouService {
 
 	int add(ProOutSou pos);
 
+	int deleteByIds(String ids);
+
 	int queryForInt(String contactName, String phone, String area, String companyName, String enginName,
 			String tradeName, String otherTrade, String specialityName, String otherSpeciality, String createTimeStart,
 			String createTimeEnd, String startDateStart, String startDateEnd, String endDateStart, String endDateEnd,

@@ -8,6 +8,8 @@ public interface NeedOutSouService {
 
 	int add(NeedOutSou nos);
 
+	int deleteByIds(String ids);
+
 	int edit(NeedOutSou nos);
 
 	int queryForInt(String contactName, String phone, String area, String companyName, String enginName,

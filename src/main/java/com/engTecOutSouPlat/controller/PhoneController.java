@@ -44,6 +44,7 @@ public class PhoneController {
 	private ProOutSouService proOutSouService;
 	@Autowired
 	private CompanyService companyService;
+	//https证书下载与配置:https://www.tencentcloud.com/zh/document/product/1007/50805
 	public static final String SERVICE_URL="https://api.weixin.qq.com/";
 	
 	@RequestMapping(value="/addOrEditWXUser")
@@ -95,6 +96,36 @@ public class PhoneController {
 			return jsonMap;
 		}
 	}
+
+	@RequestMapping(value="/deleteNeedOutSou",produces="plain/text; charset=UTF-8")
+	@ResponseBody
+	public String deleteNeedOutSou(String ids) {
+		//TODO 针对分类的动态进行实时调整更新
+		PlanResult plan=new PlanResult();
+		String json=null;
+		try {
+			int count=needOutSouService.deleteByIds(ids);
+			if(count==0) {
+				plan.setStatus(0);
+				plan.setMsg("删除需求外包失败");
+				json=JsonUtil.getJsonFromObject(plan);
+			}
+			else {
+				plan.setStatus(1);
+				plan.setMsg("删除需求外包成功");
+				json=JsonUtil.getJsonFromObject(plan);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			plan.setStatus(0);
+			plan.setMsg("删除需求外包失败");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		finally {
+			return json;
+		}
+	}
 	
 	@RequestMapping(value="/editNeedOutSou")
 	@ResponseBody
@@ -143,6 +174,36 @@ public class PhoneController {
 		}
 		finally {
 			return jsonMap;
+		}
+	}
+
+	@RequestMapping(value="/deleteProOutSou",produces="plain/text; charset=UTF-8")
+	@ResponseBody
+	public String deleteProOutSou(String ids) {
+		//TODO 针对分类的动态进行实时调整更新
+		PlanResult plan=new PlanResult();
+		String json=null;
+		try {
+			int count=proOutSouService.deleteByIds(ids);
+			if(count==0) {
+				plan.setStatus(0);
+				plan.setMsg("删除提供外包失败");
+				json=JsonUtil.getJsonFromObject(plan);
+			}
+			else {
+				plan.setStatus(1);
+				plan.setMsg("删除提供外包成功");
+				json=JsonUtil.getJsonFromObject(plan);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			plan.setStatus(0);
+			plan.setMsg("删除提供外包失败");
+			json=JsonUtil.getJsonFromObject(plan);
+		}
+		finally {
+			return json;
 		}
 	}
 	
